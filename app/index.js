@@ -8,6 +8,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const passport = require('passport');
 const app = express()
 const port = 3000
 
@@ -32,6 +33,7 @@ module.exports = class Application {
     }
 
     setConfig() {
+        require('./passport/passport-local')
         //static files (css, js, photo, ...)
         app.use(express.static(__dirname + '/public'));
 
@@ -56,6 +58,11 @@ module.exports = class Application {
         }));
         app.use(cookieParser());
         app.use(flash());
+
+
+        // Initialize Passport and restore authentication state, if any, from the session
+        app.use(passport.initialize());
+        app.use(passport.session());
     }
 
     setRoutes() {

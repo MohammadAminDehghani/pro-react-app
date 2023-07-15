@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path')
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const router = require('./routes/index');
+const router = require('./../routes/index');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -35,11 +35,11 @@ module.exports = class Application {
     setConfig() {
         require('./passport/passport-local')
         //static files (css, js, photo, ...)
-        app.use(express.static(__dirname + '/public'));
+        app.use(express.static(__dirname + '/../public'));
 
         //template engines
         app.set('view engine', 'ejs');
-        app.set('views', path.join(__dirname, 'resources/views'));
+        app.set('views', path.join(__dirname, '/../resources/views'));
         app.use(expressLayouts);
         app.set('layout', 'master');
 

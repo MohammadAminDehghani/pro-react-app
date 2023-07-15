@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 //controller
-const registerController = require('./../../http/controllers/auth/register')
+const registerController = require('../../app/http/controllers/auth/registerController')
 
 //validators
-const registerValidator = require('./../../http/validators/registerValidator')
+const registerValidator = require('../../app/http/validators/registerValidator')
 
 
 router.get('/register', registerController.get);

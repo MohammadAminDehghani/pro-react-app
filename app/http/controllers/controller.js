@@ -1,6 +1,6 @@
 const { RecaptchaV2 } = require('express-recaptcha');
 const autoBind = require('auto-bind');
-
+const { validationResult } = require('express-validator');
 module.exports = class controller {
     constructor() {
         autoBind(this);
@@ -11,7 +11,7 @@ module.exports = class controller {
         this.recaptcha = new RecaptchaV2('6Lf77BUnAAAAALeqaGqeEFyWMtntf9SocREluLuM', '6Lf77BUnAAAAAE655S7BwIGzjl-h2TQd5z0WuJwA', { 'hl': 'fa' });
     }
 
-    validationRecaptcha(req, res) {
+    async validationRecaptcha(req, res) {
         return new Promise((resolve, reject) => {
             this.recaptcha.verify(req, (error) => {
                 if (error) {
@@ -25,5 +25,28 @@ module.exports = class controller {
                 }
             })
         })
+    }
+
+    async validationForm(req, res) {
+        const result = await validationResult(req)
+        if (!result.isEmpty()) {
+            const errors = result.errors;
+            const errorsForFront = [];
+
+            errors.forEach((error) => {
+                errorsForFront.push({
+                    name: error.param,
+                    message: error.msg
+                });
+            });
+
+            req.flash('errors', errorsForFront);
+            res.redirect('/auth/register');
+            return false;
+        } else {
+            return true;
+        }
+            
+
     }
 }

@@ -1,5 +1,5 @@
-const { RecaptchaV2 } = require('express-recaptcha');
 const autoBind = require('auto-bind');
+const { RecaptchaV2 } = require('express-recaptcha');
 const { validationResult } = require('express-validator');
 module.exports = class controller {
     constructor() {
@@ -8,7 +8,7 @@ module.exports = class controller {
     }
 
     setRecaptcha() {
-        console.log(config.database.url)
+        console.log(process.env.RECAPTCHA_SITE_KEY)
         this.recaptcha = new RecaptchaV2('6Lf77BUnAAAAALeqaGqeEFyWMtntf9SocREluLuM', '6Lf77BUnAAAAAE655S7BwIGzjl-h2TQd5z0WuJwA', { 'hl': 'fa' });
     }
 

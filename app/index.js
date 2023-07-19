@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const router = require('./routes/index');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+// const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const passport = require('passport');
 const app = express()
 const port = 3000
 
@@ -23,6 +24,7 @@ module.exports = class Application {
     configServer() {
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`);
+            console.log(config)
         })
     }
 
@@ -32,6 +34,7 @@ module.exports = class Application {
     }
 
     setConfig() {
+        require('./passport/passport-local')
         //static files (css, js, photo, ...)
         app.use(express.static(__dirname + '/public'));
 
@@ -47,15 +50,20 @@ module.exports = class Application {
 
         //define session and cookies and save them in db
         app.set('trust proxy', 1) // trust first proxy
-        app.use(session({
-            secret: 'amin-agha',
-            resave: false,
-            saveUninitialized: true,
-            store: MongoStore.create({ mongoUrl: 'mongodb://0.0.0.0/pro' }),
-            cookie: { secure: false }   // it's true on https
-        }));
+        // app.use(session({
+        //     secret: 'amin-agha',
+        //     resave: false,
+        //     saveUninitialized: true,
+        //     store: MongoStore.create({ mongoUrl: 'mongodb://0.0.0.0/pro' }),
+        //     cookie: { secure: false }   // it's true on https
+        // }));
         app.use(cookieParser());
         app.use(flash());
+
+
+        // Initialize Passport and restore authentication state, if any, from the session
+        // app.use(passport.initialize());
+        // app.use(passport.session());
     }
 
     setRoutes() {

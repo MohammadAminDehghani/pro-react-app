@@ -12,8 +12,8 @@ class registerValidator {
                 .withMessage('فرمت ایمیل معتبر نیست. از فرمت صحیح استفاده کنید'),
           
             check('password')
-                .isStrongPassword()
-                .withMessage('رمز عبور به اندازه کافی قوی نیست لطفا آن را تغییر دهید'),
+                .isLength({min:5})
+                .withMessage('رمز عبور نمیتواند کمتر از 5 حرف باشد لطفا آن را تغییر دهید'),
         ]
     }
 }

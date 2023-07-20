@@ -1,5 +1,5 @@
-const { RecaptchaV2 } = require('express-recaptcha');
 const autoBind = require('auto-bind');
+const { RecaptchaV2 } = require('express-recaptcha');
 const { validationResult } = require('express-validator');
 module.exports = class controller {
     constructor() {

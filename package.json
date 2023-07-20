@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.0.1"
   },
   "scripts": {
     "start": "nodemon server.js"
@@ -23,6 +23,7 @@
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.6",
     "debug": "^3.2.7",
+    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
@@ -51,7 +52,7 @@
     "pstree.remy": "^1.1.8",
     "readdirp": "^3.6.0",
     "semver": "^5.7.1",
-    "simple-update-notifier": "^1.1.0",
+    "simple-update-notifier": "^2.0.0",
     "supports-color": "^5.5.0",
     "to-regex-range": "^5.0.1",
     "touch": "^3.1.0",

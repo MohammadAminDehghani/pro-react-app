@@ -8,6 +8,7 @@ const session = require('express-session');
 // const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const passport = require('passport');
 const app = express()
 const port = 3000
 
@@ -23,7 +24,7 @@ module.exports = class Application {
     configServer() {
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`);
-            console.log(config)
+            //console.log(config)
         })
     }
 

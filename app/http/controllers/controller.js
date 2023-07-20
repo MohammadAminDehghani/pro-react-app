@@ -8,7 +8,7 @@ module.exports = class controller {
     }
 
     setRecaptcha() {
-        console.log(process.env.DATABASE_URL)
+        //console.log(process.env)
         //console.log(config.database.url)
         //this.recaptcha = new RecaptchaV2(process.env.RECAPTCHA_SITEKEY, process.env.RECAPTCHA_SECRETKEY, { 'hl': 'fa' });
     }

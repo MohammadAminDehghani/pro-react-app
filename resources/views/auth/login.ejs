@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <form action="/auth/login" method="post">
+
+      <% if (errors.length> 0) { %>
+        <div class="alert alert-danger">
+          <ul>
+            <% errors.forEach((error)=> { %>
+              <li>
+                <%= error.message %>
+              </li>
+              <% }); %>
+          </ul>
+        </div>
+        <% } %>
+
+          <div class="card">
+            <div class="card-header">فرم ورود</div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="email">ایمیل</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email">
+              </div>
+              <div class="form-group">
+                <label for="address">رمز عبور</label>
+                <input type="password" class="form-control" name="password" id="password"
+                  placeholder="رمز عبور را وارد کنید">
+              </div>
+              <div class="form-group">
+                
+                <input type="checkbox" class="checkbox" name="remember" id="remember">
+                <label for="remember">رمز مرا به خاطر بسپار</label>
+              </div>
+              <%- recaptcha %>
+                <button type="submit" class="btn btn-primary">عضویت</button>
+            </div>
+          </div>
+    </form>
+  </div>
+  <div class="col-md-4"></div>
+</div>

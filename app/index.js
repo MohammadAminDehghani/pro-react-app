@@ -34,7 +34,7 @@ module.exports = class Application {
     }
 
     setConfig() {
-        //require('./passport/passport-local')
+        require('./passport/passport-local')
         //static files (css, js, photo, ...)
         app.use(express.static(config.layout.PUBLIC_DIR));
 

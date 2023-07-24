@@ -8,9 +8,10 @@ module.exports = class controller {
     }
 
     setRecaptcha() {
-        //console.log(process.env)
-        //console.log(config.database.url)
-        //this.recaptcha = new RecaptchaV2(process.env.RECAPTCHA_SITEKEY, process.env.RECAPTCHA_SECRETKEY, { 'hl': 'fa' });
+        //console.log(process.env.RECAPTCHA_SITE_KEY);
+        //console.log(process.env.RECAPTCHA_SECRET_KEY);
+        //console.log(config.service.RECAPTCHA.SITE_KEY)
+        this.recaptcha = new RecaptchaV2(process.env.RECAPTCHA_SITE_KEY, process.env.RECAPTCHA_SECRET_KEY, { 'hl': 'fa' });
     }
 
     async validationRecaptcha(req, res) {
@@ -21,7 +22,8 @@ module.exports = class controller {
                         name: 'recaptcha',
                         message: 'تیک من ربات نیستم را بزنید '
                     });
-                    res.redirect('/auth/register');
+                    //res.redirect('/auth/register');
+                    res.redirect(req.headers.referer);
                 } else {
                     resolve(true)
                 }
@@ -43,7 +45,7 @@ module.exports = class controller {
             });
 
             req.flash('errors', errorsForFront);
-            res.redirect('/auth/register');
+            res.redirect(req.headers.referer);
             return false;
         } else {
             return true;

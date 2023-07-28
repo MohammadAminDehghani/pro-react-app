@@ -9,6 +9,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
+const rememberLogin = require('./http/middleware/rememberLogin')
+
 const app = express()
 const port = 3000
 
@@ -34,7 +36,10 @@ module.exports = class Application {
     }
 
     setConfig() {
+        //passport strategies
         require('./passport/passport-local')
+        require('./passport/passport-google')
+
         //static files (css, js, photo, ...)
         app.use(express.static(config.layout.PUBLIC_DIR));
 
@@ -58,13 +63,22 @@ module.exports = class Application {
             // store: MongoStore.create({ mongoUrl: 'mongodb://0.0.0.0/pro' }),
             // cookie: { secure: false }   // it's true on https
         }));
-        app.use(cookieParser());
+        app.use(cookieParser(config.session.secret));
         app.use(flash());
 
 
         // Initialize Passport and restore authentication state, if any, from the session
         app.use(passport.initialize());
         app.use(passport.session());
+
+        //remember login => set cookie
+        app.use(rememberLogin.handle)
+
+        // set up middleware to pass user to views
+        app.use((req, res, next) => {
+            res.locals.currentUser = req.user;
+            next();
+        });
     }
 
     setRoutes() {

@@ -4,7 +4,7 @@ const MongoStore = require('connect-mongo')(session);
 
 module.exports = {
         secret: 'amin-agha',
-        secret : 'secretID',
+        // secret : 'secretID',
         resave : true,
         saveUninitialized : true,
         store : new MongoStore({ mongooseConnection : mongoose.connection }),

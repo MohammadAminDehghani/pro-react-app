@@ -28,12 +28,21 @@
                   placeholder="رمز عبور را وارد کنید">
               </div>
               <div class="form-group">
-                
                 <input type="checkbox" class="checkbox" name="remember" id="remember">
                 <label for="remember">رمز مرا به خاطر بسپار</label>
               </div>
+
+              <div class="form-group">
+                
+                <label for="remember">رمز عبور را فراموش کرده اید؟</label>
+                <a href="/auth/forget-password" class="btn btn-sm btn-info">بازیابی</a>
+              </div>
+
               <%- recaptcha %>
-                <button type="submit" class="btn btn-primary">عضویت</button>
+              <div class="d-flex">
+                <button type="submit" class="btn btn-sm btn-primary w-50 m-3">ورود</button>
+                <a href="/auth/google" class="btn btn-sm btn-danger w-50 m-3">ورود با گوگل</a>
+              </div>
             </div>
           </div>
     </form>

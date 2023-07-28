@@ -18,13 +18,16 @@ class loginController extends controller {
 
     }
 
-    login(req, res, next)  {
+    async login(req, res, next)  {
         passport.authenticate('local.login', (err, user) => {
             if(!user) return res.redirect('/auth/login')
             // if(err) console.log('loginController'+err)
             // return res.redirect('/') 
             req.login(user, err=>{
                 if(err) console.log(err)
+                if(req.body.remember){
+                    user.setRememberToken(res)
+                }
                 return res.redirect('/') 
             })
         })(req, res, next)

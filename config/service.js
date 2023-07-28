@@ -5,5 +5,10 @@ module.exports = {
         options : {
             hl : 'fa'
         }
+    },
+
+    Google : {
+        clientID : process.env.clientID,
+        clientSecret : process.env.clientSecret
     }
 }

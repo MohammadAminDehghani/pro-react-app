@@ -30,6 +30,10 @@ module.exports = class controller {
             })
         })
     }
+    
+    back(req, res) {
+        return res.redirect(req.header('Referer') || '/');
+    }
 
     async validationForm(req, res) {
         const result = await validationResult(req)

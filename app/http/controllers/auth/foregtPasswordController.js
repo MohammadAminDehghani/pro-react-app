@@ -41,20 +41,20 @@ class forgetpasswordController extends controller {
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: 'a46713b1e8d7d0', // generated ethereal user
-                pass: '2a53a9682fed74' // generated ethereal password
+                user: 'man.dehghani1991@gamil.com', // generated ethereal user
+                pass: '8822318Amin@' // generated ethereal password
             }
         });
 
         // send mail with defined transport object
         let info = await transporter.sendMail({
-            from: '"وب سایت آموزشی 👻" <foo@example.com>', // sender address
+            from: '"man.dehghani1991@gamil.com', // sender address
             to: `${setpassowrd.email}`, // list of receivers
             subject: 'تغییر رمز عبور✔', // Subject line
             text: 'از طریق لینک زیر می توانید رمز عبور خود را تغییر دهید', // plain text body
             html: `
                 <h1>لینک تغییر رمز عبور</h1>
-                <a href="http://localhost:3000/auth/password/reset/${setpassowrd.token}">لینک</a>
+                <a href="http://localhost:3000/auth/password/reset/${setpassowrd.token}">برای تغییر رمز روی لینک کلیک کنید</a>
             ` // html body
         });
 

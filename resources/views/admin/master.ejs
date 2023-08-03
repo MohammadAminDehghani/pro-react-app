@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap-rtl.min.css">
 
-    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/libs/css/style.css">
-    <link rel="stylesheet" href="assets/libs/css/vazir.css">
-    <link rel="stylesheet" href="assets/libs/css/home.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="assets/vendor/charts/chartist-bundle/chartist.css">
-    <link rel="stylesheet" href="assets/vendor/charts/morris-bundle/morris.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/assets/libs/css/vazir.css">
+    <link rel="stylesheet" href="/assets/libs/css/home.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="/assets/vendor/charts/chartist-bundle/chartist.css">
+    <link rel="stylesheet" href="/assets/vendor/charts/morris-bundle/morris.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/vendor/charts/c3charts/c3.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
     <%- typeof css !== 'undefined' ? css : '' %>
     <title>پنل مدیریت وب سایت آموزشی</title>
 </head>
@@ -33,7 +33,7 @@
         <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" style="margin-right: 0px" href="index.html">NODEJS</a>
+                <a class="navbar-brand" style="margin-right: 0px" href="index.html">سایت آموزشی امین آقا</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -41,7 +41,10 @@
                 </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto navbar-right-top">
-                        <a href="/logout" class="btn btn-sm btn-danger ml-sm-4">خروج</a>
+                        <button class="btn btn-sm btn-light m-1" disabled>
+                            <%= currentUser.name %>
+                       </button>
+                        <a href="/logout" class="btn btn-sm btn-outline-danger ml-5 m-1">خروج</a>
                     </ul>
                 </div>
             </nav>
@@ -56,7 +59,7 @@
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">داشبورد</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    <button href="" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -70,7 +73,7 @@
                                 <div id="submenu-1" class="collapse submenu">
                                     <ul class="nav flex-column" style="padding-right: 20px">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-finance.html">نمونه 1</a>
+                                            <a class="nav-link" href="/admin">صفحه اصلی</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="dashboard-sales.html">نمونه 2</a>
@@ -85,10 +88,10 @@
                                 <div id="submenu-2" class="collapse submenu">
                                     <ul class="nav flex-column" style="padding-right: 20px">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">ایجاد دوره جدید</a>
+                                            <a class="nav-link" href="/admin/course/create">ایجاد دوره جدید</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">مدیریت دوره ها</a>
+                                            <a class="nav-link" href="/admin/course">مدیریت دوره ها</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -159,25 +162,25 @@
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
     <!-- jquery 3.3.1 -->
-    <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <!-- bootstap bundle js -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- slimscroll js -->
-    <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <script src="/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <!-- main js -->
-    <script src="assets/libs/js/main-js.js"></script>
+    <script src="/assets/libs/js/main-js.js"></script>
     <!-- chart chartist js -->
-    <script src="assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
+    <script src="/assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
     <!-- sparkline js -->
-    <script src="assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+    <script src="/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
     <!-- morris js -->
-    <script src="assets/vendor/charts/morris-bundle/raphael.min.js"></script>
-    <script src="assets/vendor/charts/morris-bundle/morris.js"></script>
+    <script src="/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+    <script src="/assets/vendor/charts/morris-bundle/morris.js"></script>
     <!-- chart c3 js -->
-    <script src="assets/vendor/charts/c3charts/c3.min.js"></script>
-    <script src="assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
-    <script src="assets/vendor/charts/c3charts/C3chartjs.js"></script>
-    <script src="assets/libs/js/dashboard-ecommerce.js"></script>
+    <script src="/assets/vendor/charts/c3charts/c3.min.js"></script>
+    <script src="/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+    <script src="/assets/vendor/charts/c3charts/C3chartjs.js"></script>
+    <script src="/assets/libs/js/dashboard-ecommerce.js"></script>
     <%- typeof script !== 'undefined' ? script : '' %>
 </body>
 

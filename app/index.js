@@ -43,6 +43,9 @@ module.exports = class Application {
         //static files (css, js, photo, ...)
         app.use(express.static(config.layout.PUBLIC_DIR));
 
+        // Set up static file serving
+        //app.use(express.static(path.join(__dirname, 'public')));
+
         //template engines
         app.set('view engine', config.layout.VIEW_ENGINE);
         app.set('views', path.join(config.layout.VIEW_DIR));

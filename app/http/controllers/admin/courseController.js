@@ -23,20 +23,29 @@ class CourseController extends controller {
 
   create(req, res) {
     try {
-      res.render('admin/course/create');
+      res.render('admin/course/create', { errors: req.flash('errors') });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
   }
 
   async post(req, res) {
-    const course = new Course(req.body);
-    try {
-      const newCourse = await course.save();
-      res.redirect('/admin/course');
-    } catch (err) {
-      res.status(400).json({ message: err.message });
+    const validatedData = this.validationForm(req, res)
+    //console.log('inja')
+    if (validatedData) {
+      const course = new Course(req.body);
+      try {
+        const newCourse = await course.save();
+        res.redirect('/admin/course');
+      } catch (err) {
+        res.render('admin/course/create');
+      }
+    }else{
+      //console.log(555555555666)
+      this.back(req, res);
     }
+
+
   }
 
   async edit(req, res) {

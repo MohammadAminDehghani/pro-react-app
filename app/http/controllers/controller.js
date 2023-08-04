@@ -49,7 +49,9 @@ module.exports = class controller {
             });
 
             req.flash('errors', errorsForFront);
-            res.redirect(req.headers.referer);
+            console.log(errors)
+            this.back(req, res);
+            //res.redirect(req.headers.referer);
             return false;
         } else {
             return true;

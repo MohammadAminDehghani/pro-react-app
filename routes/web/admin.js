@@ -24,7 +24,7 @@ const adminController = require('app/http/controllers/admin/adminController')
 const courseController = require('app/http/controllers/admin/courseController')
 
 //validators
-//const loginValidator = require('../../app/http/validators/loginValidator')
+const courseValidator = require('app/http/validators/admin/courseValidator')
 
 
 router.get('/', adminController.index);
@@ -39,10 +39,10 @@ router.get('/course', courseController.index);
 router.get('/course/:id/show', courseController.show);
 
 router.get('/course/create', courseController.create);
-router.post('/course', courseController.post);
+router.post('/course', courseValidator.handle(), courseController.post);
 
 router.get('/course/:id/edit', courseController.show);
-router.put('/course/:id', courseController.update);
+router.put('/course/:id', courseValidator.handle(), courseController.update);
 
 router.delete('/course/:id', courseController.delete);
 

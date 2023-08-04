@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const rememberLogin = require('./http/middleware/rememberLogin')
+const multer = require('multer')
 
 const app = express()
 const port = 3000

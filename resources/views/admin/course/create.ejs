@@ -5,73 +5,76 @@
         </div>
     </div>
 </div>
-<% if (errors.length > 0) { %>
+<span></span>
+<% if (errors !== 'undefined' && errors.length> 0) { %>
     <div class="alert alert-danger">
-      <ul>
-        <% errors.forEach((error) => { %>
-          <li><%= error.message %></li>
-        <% }); %>
-      </ul>
+        <ul>
+            <% errors.forEach((error)=> { %>
+                <li>
+                    <%= error.message %>
+                </li>
+            <% }); %>
+        </ul>
     </div>
-  <% } %>
-<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
-    style="padding-right: 0px;padding-left: 0px;">
-    <div class="card">
-            <h5 class="card-header">ایجاد دوره جدید</h5>
-        <div class="card-body">
-            <form id="validationform" data-parsley-validate="" novalidate="" action="/admin/course/" method="post">
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="title" class="control-label font-weight-bold">عنوان دوره</label>
-                        <input type="text" class="form-control" name="title" id="title"
-                            placeholder="عنوان را وارد کنید">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="type"
-                            class="control-label font-weight-bold font-weight-bold">نوع دوره</label>
-                        <select name="type" id="type" class="form-control">
-                            <option value="vip">اعضای ویژه</option>
-                            <option value="cash">نقدی</option>
-                            <option value="free" selected>رایگان</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="body" class="control-label font-weight-bold">متن</label>
-                        <textarea rows="5" class="form-control" name="body" id="body"
-                            placeholder="متن مقاله را وارد کنید"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="images" class="control-label font-weight-bold">تصویر
-                            دوره</label>
-                        <input type="file" class="form-control" name="images" id="images"
-                            placeholder="تصویر مقاله را وارد کنید">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label for="price" class="control-label font-weight-bold">قیمت</label>
-                        <input type="text" class="form-control" name="price" id="price"
-                            placeholder="قیمت ها را وارد کنید">
-                    </div>
-                    <div class="col">
-                        <label for="tags" class="control-label font-weight-bold">تگ ها</label>
-                        <input type="text" class="form-control" name="tags" id="tags"
-                            placeholder="تگ ها را وارد کنید">
-                    </div>
-                </div>
+<% } %>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="padding-right: 0px;padding-left: 0px;">
+            <div class="card">
+                <h5 class="card-header">ایجاد دوره جدید</h5>
+                <div class="card-body">
+                    <form action="/admin/course/" method="post" enctype="multipart/form-data" id="validationform"
+                        data-parsley-validate="" novalidate="">
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="title" class="control-label font-weight-bold">عنوان دوره</label>
+                                <input type="text" class="form-control" name="title" id="title"
+                                    placeholder="عنوان را وارد کنید">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="type" class="control-label font-weight-bold font-weight-bold">نوع
+                                    دوره</label>
+                                <select name="type" id="type" class="form-control">
+                                    <option value="vip">اعضای ویژه</option>
+                                    <option value="cash">نقدی</option>
+                                    <option value="free" selected>رایگان</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="body" class="control-label font-weight-bold">متن</label>
+                                <textarea rows="5" class="form-control" name="body" id="body"
+                                    placeholder="متن مقاله را وارد کنید"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="images" class="control-label font-weight-bold">تصویر
+                                    دوره</label>
+                                <input type="file" class="form-control" name="images" id="images"
+                                    placeholder="تصویر مقاله را وارد کنید">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="price" class="control-label font-weight-bold">قیمت</label>
+                                <input type="text" class="form-control" name="price" id="price"
+                                    placeholder="قیمت ها را وارد کنید">
+                            </div>
+                            <div class="col">
+                                <label for="tags" class="control-label font-weight-bold">تگ ها</label>
+                                <input type="text" class="form-control" name="tags" id="tags"
+                                    placeholder="تگ ها را وارد کنید">
+                            </div>
+                        </div>
 
-                <div class="form-group row text-right">
-                    <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                        <button type="submit" class="btn btn-space btn-primary">ارسال</button>
-                    </div>
+                        <div class="form-group row text-right">
+                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                <button type="submit" class="btn btn-space btn-primary">ارسال</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>

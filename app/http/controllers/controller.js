@@ -32,7 +32,9 @@ module.exports = class controller {
     }
     
     back(req, res) {
-        return res.redirect(req.header('Referer') || '/');
+        // console.log(req)
+        // console.log(req.errors)
+        return res.redirect((req.header('Referer') || '/'));
     }
 
     async validationForm(req, res) {
@@ -49,10 +51,10 @@ module.exports = class controller {
             });
 
             req.flash('errors', errorsForFront);
-            console.log(errors)
+            //console.log(errors)
             this.back(req, res);
             //res.redirect(req.headers.referer);
-            return false;
+            //return false;
         } else {
             return true;
         }

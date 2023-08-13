@@ -1,5 +1,6 @@
 const Course = require('app/models/Course');
 const controller = require('app/http/controllers/controller');
+const fs = require('fs')
 
 
 class CourseController extends controller {
@@ -34,14 +35,31 @@ class CourseController extends controller {
     //console.log('inja')
     if (validatedData) {
       const course = new Course(req.body);
+
+
+
+
+      // const newCourse = await course.save();
+      // res.redirect('/admin/course');
+      // res.render('admin/course/create');
+
+
       try {
         const newCourse = await course.save();
         res.redirect('/admin/course');
       } catch (err) {
         res.render('admin/course/create');
       }
+
+
+
+
+
     }else{
       //console.log(555555555666)
+      if(req.file){
+        fs.unlink(req.file.path, (err) => console.log(err) )
+      }
       this.back(req, res);
     }
 

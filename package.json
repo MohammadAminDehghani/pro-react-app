@@ -59,6 +59,7 @@
     "pstree.remy": "^1.1.8",
     "readdirp": "^3.6.0",
     "semver": "^5.7.1",
+    "sharp": "^0.32.5",
     "simple-update-notifier": "^2.0.0",
     "supports-color": "^5.5.0",
     "to-regex-range": "^5.0.1",

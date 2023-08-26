@@ -39,8 +39,8 @@
                                     دوره</label>
                                 <select name="type" id="type" class="form-control">
                                     <option value="vip" <%= course.type === 'vip' ? 'selected' : '' %> >اعضای ویژه</option>
-                                    <option value="cash">نقدی</option>
-                                    <option value="free" selected>رایگان</option>
+                                    <option value="cash" <%= course.type === 'cash' ? 'selected' : '' %>>نقدی</option>
+                                    <option value="free" <%= course.type === 'free' ? 'selected' : '' %>>رایگان</option>
                                 </select>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                     placeholder="تصویر مقاله را وارد کنید">
                             </div>
                             <div class="col">
-                                <img src=<%= course.image %> alt="" style="width:300px">
+                                <img src="<%= course.image %>" alt="" style="width:300px">
                             </div>
                         </div>
                         <div class="form-group row">

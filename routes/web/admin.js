@@ -58,17 +58,6 @@ router.use((req, res, next) => {
 const attachFileToFormData = require('app/http/middleware/attachFileToFormData')
 
 
-// Middleware to set the layout based on the URL path
-// router.use((req, res, next) => {
-//     //console.log(req.path)
-//     if (req.path.startsWith('/course')) {
-//       res.locals.layout = 'admin/master';
-//     } else {
-//       res.locals.layout = 'default/master';
-//     }
-//     next();
-//   });
-
 //controller
 const adminController = require('app/http/controllers/admin/adminController')
 const courseController = require('app/http/controllers/admin/courseController')
@@ -79,7 +68,6 @@ const courseValidator = require('app/http/validators/admin/courseValidator')
 
 router.get('/', adminController.index);
 // router.post('/login', loginValidator.handle(), loginController.post);
-
 
 
 

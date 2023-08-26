@@ -34,10 +34,10 @@ class CourseController extends controller {
     const validatedData = this.validationForm(req, res)
 
     // اگر عکس وجود داشت
-    if(req.body.image){
+    if (req.body.image) {
       req.body.image = req.body.path.substr(6);
     }
-    
+
     // اگر دیتاها معتبر بود
     if (validatedData) {
       const course = new Course(req.body);
@@ -60,32 +60,49 @@ class CourseController extends controller {
   async edit(req, res) {
     try {
       const course = await Course.findById(req.params.id);
-      res.render('admin/course/edit', { errors: req.flash('errors'), course : course });
+      res.render('admin/course/edit', { errors: req.flash('errors'), course: course });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   }
 
   async update(req, res) {
-    try {
-      const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      res.redirect('/admin/course');
-    } catch (err) {
-      res.status(400).json({ message: err.message });
+    const validatedData = this.validationForm(req, res);
+
+    // اگر عکس وجود داشت
+    if (req.body.image) {
+      req.body.image = req.body.path.substr(6);
     }
+
+    if (validatedData) {
+      try {
+        const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect('/admin/course');
+      } catch (err) {
+        res.render('admin/course/edit');
+      }
+    }else {
+
+      // اگر دیتای فرم معتبر نبود عکس آپلود شده مجددا حذف شود
+      if (req.file) {
+        fs.unlinkSync(req.file.path)
+      }
+      this.back(req, res);
+    }
+
   }
 
   async delete(req, res) {
     try {
       const courseId = req.params.id;
       const deletedCourse = await Course.findByIdAndDelete(courseId);
-  
+
       if (!deletedCourse) {
         return res.status(404).json({ message: 'Course not found' });
       }
-  
+
       // Delete the associated image
-      const imagePath = 'public'+deletedCourse.image;
+      const imagePath = 'public' + deletedCourse.image;
       if (imagePath) {
         // Remove the image file from the file system
         fs.unlinkSync(imagePath);

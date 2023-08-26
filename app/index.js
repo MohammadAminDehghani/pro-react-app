@@ -11,6 +11,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const rememberLogin = require('./http/middleware/rememberLogin')
 const multer = require('multer')
+const methodOverride = require('method-override')
 
 const app = express()
 const port = 3000
@@ -83,6 +84,9 @@ module.exports = class Application {
             res.locals.currentUser = req.user;
             next();
         });
+
+        // override with POST having ?_method=DELETE
+        app.use(methodOverride('_method'))
     }
 
     setRoutes() {

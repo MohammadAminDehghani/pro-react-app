@@ -22,6 +22,7 @@
                                 <span>نام دوره: </span>
                                 <%= course.body %>
                             </p>
+                            <img src="<%= course.image %>" style="width: 450px;" alt="">
                             <p>
                                 <span>نویسنده دوره: </span>
                                 <%= course.author %>
@@ -32,9 +33,19 @@
                                     <span> تومان</span>
                             </p>
                         </div>
-                        <div class="card-footer">
-                            <a class="btn btn-sm btn-outline-primary" href="/admin/course/<%= course._id %>/show">نمایش
+                        <div class="card-footer d-flex">
+                            <a class="btn btn-sm btn-outline-warning m-1"
+                                href="/admin/course/<%= course._id %>/edit">ویرایش
                                 دوره</a>
+
+                                <a class="btn btn-sm btn-outline-primary m-1"
+                                href="/admin/course/<%= course._id %>/show">نمایش
+                                دوره</a>
+
+                            <form action="/admin/course/<%= course._id %>?_method=DELETE" method="POST">
+                                <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                                <button class="btn btn-sm btn-outline-danger m-1" type="submit">حذف دوره</button>
+                            </form>
                         </div>
                     </div>
                 </div>

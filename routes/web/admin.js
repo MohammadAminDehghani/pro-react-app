@@ -13,6 +13,10 @@ const getDir = () => {
   let month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
   let day = currentDate.getDate().toString().padStart(2, '0');
   let subfolderPath = path.join(uploadDir, year, month, day);
+
+  // Normalize the subfolderPath to use forward slashes
+  subfolderPath = subfolderPath.replace(/\\/g, '/');
+
   return subfolderPath;
 }
 
@@ -30,9 +34,12 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     let filePath = getDir() + '/' + file.originalname
     if (!fs.existsSync(filePath)) {
+      req.body.path = filePath;
       cb(null, file.originalname);
     } else {
-      cb(null, Date.now() + '-' + file.originalname);
+      let now = Date.now();
+      req.body.path = getDir() + '/' + now + '-' + file.originalname;
+      cb(null, now + '-' + file.originalname);
     }
 
   }
@@ -82,10 +89,10 @@ router.get('/course', courseController.index);
 router.get('/course/:id/show', courseController.show);
 
 router.get('/course/create', courseController.create);
-router.post('/course', upload.single('images'), attachFileToFormData.handle, courseValidator.handle(), courseController.post);
+router.post('/course', upload.single('image'), attachFileToFormData.handle, courseValidator.handle(), courseController.post);
 
-router.get('/course/:id/edit', courseController.show);
-router.put('/course/:id', courseValidator.handle(), courseController.update);
+router.get('/course/:id/edit', courseController.edit);
+router.put('/course/:id', upload.single('image'), attachFileToFormData.handle, courseValidator.handle(), courseController.update);
 
 router.delete('/course/:id', courseController.delete);
 

@@ -32,44 +32,35 @@ class CourseController extends controller {
 
   async post(req, res) {
     const validatedData = this.validationForm(req, res)
-    //console.log('inja')
+
+    // اگر عکس وجود داشت
+    if(req.body.image){
+      req.body.image = req.body.path.substr(6);
+    }
+    
+    // اگر دیتاها معتبر بود
     if (validatedData) {
       const course = new Course(req.body);
-
-
-
-
-      // const newCourse = await course.save();
-      // res.redirect('/admin/course');
-      // res.render('admin/course/create');
-
-
       try {
         const newCourse = await course.save();
         res.redirect('/admin/course');
       } catch (err) {
         res.render('admin/course/create');
       }
+    } else {
 
-
-
-
-
-    }else{
-      //console.log(555555555666)
-      if(req.file){
-        fs.unlink(req.file.path, (err) => console.log(err) )
+      // اگر دیتای فرم معتبر نبود عکس آپلود شده مجددا حذف شود
+      if (req.file) {
+        fs.unlinkSync(req.file.path)
       }
       this.back(req, res);
     }
-
-
   }
 
   async edit(req, res) {
     try {
       const course = await Course.findById(req.params.id);
-      res.render('admin/course/edit', { course });
+      res.render('admin/course/edit', { errors: req.flash('errors'), course : course });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -78,7 +69,7 @@ class CourseController extends controller {
   async update(req, res) {
     try {
       const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      res.redirect('/admin/courses');
+      res.redirect('/admin/course');
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -86,8 +77,20 @@ class CourseController extends controller {
 
   async delete(req, res) {
     try {
-      const deletedCourse = await Course.findByIdAndDelete(req.params.id);
-      res.redirect('/admin/courses');
+      const courseId = req.params.id;
+      const deletedCourse = await Course.findByIdAndDelete(courseId);
+  
+      if (!deletedCourse) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+  
+      // Delete the associated image
+      const imagePath = 'public'+deletedCourse.image;
+      if (imagePath) {
+        // Remove the image file from the file system
+        fs.unlinkSync(imagePath);
+      }
+      res.redirect('/admin/course');
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

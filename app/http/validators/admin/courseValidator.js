@@ -6,27 +6,27 @@ class courseValidator extends validator {
     handle() {
         return [
             check('title')
-                .isLength({ min: 5 })
-                .withMessage('عنوان دوره نباید کمتر از 5 کارکتر باشد'),
+                .isLength({ min: 3 })
+                .withMessage('عنوان دوره نباید کمتر از 3 کارکتر باشد'),
             check('body')
                 .not().isEmpty()
                 .withMessage('متن دوره نمی تواند خالی باشد'),
             check('type')
                 .not().isEmpty()
                 .withMessage('نوع دوره را وارد کنید'),
-                check('images')
-                    .custom(async (value , { req }) => {
+            check('image')
+                .custom(async (value , { req }) => {
 
-                        if(req.query._method === 'PUT' && value === undefined) return;
-                        if(! value){
-                            throw new Error('تصویر دوره را وارد کنید')
-                        }else {
-                            const fileExe = ['.png', '.jpg', '.jepg' ,'.svg']
-                            if( !fileExe.includes(path.extname(value))){
-                                throw new Error('فایل انتخابی تصویر نمی باشد')
-                            }
+                    if(req.query._method === 'PUT' && value === undefined) return;
+                    if(! value){
+                        throw new Error('تصویر دوره را وارد کنید')
+                    }else {
+                        const fileExe = ['.png', '.jpg', '.jpeg' ,'.svg']
+                        if( !fileExe.includes(path.extname(value))){
+                            throw new Error('فایل انتخابی تصویر نمی باشد')
                         }
-                    }),
+                    }
+                }),
             check('price')
                 .not().isEmpty()
                 .withMessage('هزینه دوره را وارد کنید'),

@@ -1,4 +1,4 @@
 
 module.exports = {
-    url : 'mongodb://127.0.0.1/pro'
+    url : 'mongodb://0.0.0.0:27017/pro'
 }

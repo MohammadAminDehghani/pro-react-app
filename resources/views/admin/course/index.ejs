@@ -1,55 +1,91 @@
-<div class="card">
-    <div class="card-header d-flex">
-        <div class="col">
-            <h2>لیست همه دوره ها</h2>
-        </div>
-        <div class="col">
-            <a class="btn btn-sm btn-danger ml-auto" href="/admin/course/create">دوره جدید</a>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <% courses.forEach((course)=> { %>
-                <div class="col-md-6 py-3">
-                    <div class="card my-2 h-100">
-                        <div class="card-header bg-light">
-                            <h4>
-                                <%= course.title %>
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <p>
-                                <span>نام دوره: </span>
-                                <%= course.body %>
-                            </p>
-                            <img src="<%= course.image %>" style="width: 450px;" alt="">
-                            <p>
-                                <span>نویسنده دوره: </span>
-                                <%= course.author %>
-                            </p>
-                            <p>
-                                <span>قیمت دوره: </span>
-                                <%= course.price %>
-                                    <span> تومان</span>
-                            </p>
-                        </div>
-                        <div class="card-footer d-flex">
-                            <a class="btn btn-sm btn-outline-warning m-1"
-                                href="/admin/course/<%= course._id %>/edit">ویرایش
-                                دوره</a>
-
-                                <a class="btn btn-sm btn-outline-primary m-1"
-                                href="/admin/course/<%= course._id %>/show">نمایش
-                                دوره</a>
-
-                            <form action="/admin/course/<%= course._id %>?_method=DELETE" method="POST">
-                                <!-- <input type="hidden" name="_method" value="DELETE"> -->
-                                <button class="btn btn-sm btn-outline-danger m-1" type="submit">حذف دوره</button>
-                            </form>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">دوره ها</h5>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered first">
+                        <thead>
+                            <tr>
+                                <th>نام دوره</th>
+                                <th>نوع دوره</th>
+                                <th>زمان دوره</th>
+                                <th>قیمت</th>
+                                <th>نمایش</th>
+                                <th>تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <% courses.forEach(course => { %>
+                        <tr>
+                            <td><%- course.title %></td>
+                            <td>
+                                <% if(course.type === 'vip') { %>
+                                    اعضا ویژه
+                                <% }else if(course.type === 'cash') { %>
+                                    نقدی
+                                <% } else { %> 
+                                    رایگان
+                                <% }%>
+                            </td>
+                            <td><%- course.price %></td>
+                            <td><%- course.time %></td>
+                            <td><%- course.viewCount %></td>
+                            <td>
+                                <div>
+                                    <form action="/admin/course/<%- course._id %>?_method=DELETE" method="POST">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <a href="/admin/course/<%= course._id %>/edit" class="btn btn-sm btn-primary">ویرایش</a>
+                                        <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>نام دوره</th>
+                                <th>نوع دوره</th>
+                                <th>قیمت</th>
+                                <th>نمایش</th>
+                                <th>تنظیمات</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-                <% }); %>
+            </div>
+            <div class="row justify-content-center m-2">
+                <% if (pages > 0) { %>
+                <div class="d-flex">
+                  <% if (page == 1) { %>
+                  <div class="page-item disabled"><a class="page-link">اولین</a></div>
+                  <% } else { %>
+                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= 1 %>">اولین</a></div>
+                  <% } %>
+                  <% var i = ((page) > 5 ? (page) - 4 : 1) %>
+                  <% if (i !== 1) { %>
+                  <div class="page-item disabled"><a class="page-link">...</a></div>
+                  <% } %>
+                  <% for (; i <= ((page) + 4) && i <= pages; i++) { %>
+                  <% if (i == page) { %>
+                  <div class="page-item active"><a class="page-link"><%= i %></a></div>
+                  <% } else { %>
+                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= i %>"><%= i %></a></div>
+                  <% } %>
+                  <% if (i == (page) + 4 && i < pages) { %>
+                  <div class="page-item disabled"><a class="page-link">...</a></div>
+                  <% } %>
+                  <% } %>
+                  <% if (page == pages) { %>
+                  <div class="page-item disabled"><a class="page-link">آخرین</a></div>
+                  <% } else { %>
+                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= pages %>">آخرین</a></div>
+                  <% } %>
+                </div>
+                <% } %>
+              </div>
         </div>
     </div>
 </div>
+

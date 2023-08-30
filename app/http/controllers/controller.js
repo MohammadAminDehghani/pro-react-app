@@ -30,35 +30,52 @@ module.exports = class controller {
             })
         })
     }
-    
+
     back(req, res) {
-        // console.log(req)
-        // console.log(req.errors)
-        return res.redirect((req.header('Referer') || '/'));
+        if (!res.headersSent) {
+            return res.redirect(req.header('Referer') || '/');
+        } else {
+            // Handle the case when headers have already been sent
+            // You can choose to log an error, render an error page, or perform any other necessary action.
+            console.error('Headers have already been sent. Unable to perform redirect.');
+        }
     }
 
     async validationForm(req, res) {
-        const result = await validationResult(req)
-        if (!result.isEmpty()) {
-            const errors = result.errors;
-            const errorsForFront = [];
+        // const result = await validationResult(req)
+        // if (!result.isEmpty()) {
+        //     const errors = result.errors;
+        //     const errorsForFront = [];
 
+        //     errors.forEach((error) => {
+        //         errorsForFront.push({
+        //             name: error.param,
+        //             message: error.msg
+        //         });
+        //     });
+        //     req.flash('errors', errorsForFront);
+        //     this.back(req, res);
+        // } else {
+        //     return true;
+        // }
+
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            const errors = result.array();
+            //const errors = result.errors;
+            const errorsForFront = [];
             errors.forEach((error) => {
                 errorsForFront.push({
                     name: error.param,
                     message: error.msg
                 });
             });
-
             req.flash('errors', errorsForFront);
-            //console.log(errors)
-            this.back(req, res);
-            //res.redirect(req.headers.referer);
-            //return false;
-        } else {
-            return true;
+            return false
         }
-            
+
+        return true;
+
 
     }
 }

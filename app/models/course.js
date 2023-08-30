@@ -17,12 +17,16 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  time: {
+    type: String,
+    default: '00:00:00'
+  },
   price: {
     type: Number,
     required: true
   },
   image: {
-    type: String,
+    type: Object,
     required: true
   },
   createdAt: {
@@ -30,5 +34,26 @@ const courseSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+
+
+
+// Define a static method for pagination
+courseSchema.statics.paginate = async function (page, limit) {
+  const skip = (page - 1) * limit;
+  const countPromise = this.countDocuments().exec();
+  const docsPromise = this.find().skip(skip).limit(limit).exec();
+  return Promise.all([countPromise, docsPromise])
+    .then(([total, results]) => {
+      const totalPages = Math.ceil(total / limit);
+      return {
+        results,
+        page,
+        limit,
+        total,
+        totalPages
+      };
+    });
+};
 
 module.exports = mongoose.model('Course', courseSchema);

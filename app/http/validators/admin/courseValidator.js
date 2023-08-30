@@ -18,6 +18,7 @@ class courseValidator extends validator {
                 .custom(async (value , { req }) => {
 
                     if(req.query._method === 'PUT' && value === undefined) return;
+                    
                     if(! value){
                         throw new Error('تصویر دوره را وارد کنید')
                     }else {

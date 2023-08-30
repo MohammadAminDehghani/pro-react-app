@@ -6,7 +6,7 @@
     </div>
 </div>
 <span></span>
-<% if (errors !== 'undefined' && errors.length> 0) { %>
+<% if ( typeof errors !== 'undefined' && errors.length > 0 ) { %>
     <div class="alert alert-danger">
         <ul>
             <% errors.forEach((error)=> { %>

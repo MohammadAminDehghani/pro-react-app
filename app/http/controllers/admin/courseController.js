@@ -1,9 +1,10 @@
-const Course = require('app/models/Course');
+
 const controller = require('app/http/controllers/controller');
+const Course = require('app/models/course');
 const fs = require('fs');
 const faker = require('faker');
 const { Console } = require('console');
-const Episode = require('../../../models/episode');
+const Episode = require('app/models/episode');
 
 
 class CourseController extends controller {

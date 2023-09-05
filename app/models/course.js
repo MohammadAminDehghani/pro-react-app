@@ -41,4 +41,8 @@ Course.virtual('episodes', {
   foreignField: 'course',
 })
 
+Course.methods.path = function(){
+  return `/course/${this.slug}`;
+}
+
 module.exports = mongoose.model('Course', Course);

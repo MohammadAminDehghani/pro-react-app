@@ -1,9 +1,13 @@
 const express = require('express');
+const homeController = require('app/http/controllers/public/homeController');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('home/index');
-})
+
+router.get('/', homeController.index);
+
+// router.get('/', (req, res) => {
+//     res.render('home/index');
+// })
 
 //logout
 router.get('/logout', (req, res) => {

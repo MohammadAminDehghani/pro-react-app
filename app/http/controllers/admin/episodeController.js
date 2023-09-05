@@ -1,5 +1,5 @@
 const controller = require('app/http/controllers/controller');
-const Course = require('app/models/Course');
+const Course = require('app/models/course');
 const Episode = require('app/models/episode');
 const sprintf = require('sprintf-js').sprintf;
 

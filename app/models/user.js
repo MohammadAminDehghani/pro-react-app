@@ -9,7 +9,12 @@ const User = mongoose.Schema({
   email: { type: String },
   password: { type: String, required: true },
   rememberToken: { type: String, default: '' }
-}, { timestamps: true });
+},
+  {
+    timestamps: true,
+    toJSON: { virtuals : true } 
+  }
+);
 
 User.pre('save', async function (next) {
   try {
@@ -42,12 +47,18 @@ User.methods.setRememberToken = function (res) {
   const token = uniqueString();
   res.cookie('remember_token', token, { maxAge: 1000 * 60, httpOnly: true, signed: true })
   this.updateOne({ rememberToken: token }
-  //   , err => {
-  //   if (err) console.log(err)
-  // }
+    //   , err => {
+    //   if (err) console.log(err)
+    // }
   )
 }
 
+User.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'user',
+})
 
-module.exports = mongoose.model('User' , User);
+
+module.exports = mongoose.model('User', User);
 //module.exports = User;

@@ -1,7 +1,16 @@
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
-            <h5 class="card-header">دوره ها</h5>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <span>دوره ها</span>
+                    </div>
+                    <div class="col d-flex">
+                        <a href="/admin/course/create" class="btn btn-sm btn-primary mr-auto">دوره جدید</a>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered first">
@@ -16,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody></tbody>
-                        <% courses.forEach(course => { %>
+                        <% courses.docs.forEach(course => { %>
                         <tr>
                             <td><%- course.title %></td>
                             <td>
@@ -56,31 +65,31 @@
                 </div>
             </div>
             <div class="row justify-content-center m-2">
-                <% if (pages > 0) { %>
+                <% if (courses.pages > 0) { %>
                 <div class="d-flex">
-                  <% if (page == 1) { %>
+                  <% if (courses.page == 1) { %>
                   <div class="page-item disabled"><a class="page-link">اولین</a></div>
                   <% } else { %>
                   <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= 1 %>">اولین</a></div>
                   <% } %>
-                  <% var i = ((page) > 5 ? (page) - 4 : 1) %>
+                  <% var i = ((courses.page) > 5 ? (courses.page) - 4 : 1) %>
                   <% if (i !== 1) { %>
                   <div class="page-item disabled"><a class="page-link">...</a></div>
                   <% } %>
-                  <% for (; i <= ((page) + 4) && i <= pages; i++) { %>
-                  <% if (i == page) { %>
+                  <% for (; i <= ((courses.page) + 4) && i <= courses.pages; i++) { %>
+                  <% if (i == courses.page) { %>
                   <div class="page-item active"><a class="page-link"><%= i %></a></div>
                   <% } else { %>
                   <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= i %>"><%= i %></a></div>
                   <% } %>
-                  <% if (i == (page) + 4 && i < pages) { %>
+                  <% if (i == (courses.page) + 4 && i < courses.pages) { %>
                   <div class="page-item disabled"><a class="page-link">...</a></div>
                   <% } %>
                   <% } %>
-                  <% if (page == pages) { %>
+                  <% if (courses.page == courses.pages) { %>
                   <div class="page-item disabled"><a class="page-link">آخرین</a></div>
                   <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= pages %>">آخرین</a></div>
+                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= courses.pages %>">آخرین</a></div>
                   <% } %>
                 </div>
                 <% } %>

@@ -3,6 +3,7 @@ const controller = require('app/http/controllers/controller');
 const fs = require('fs');
 const faker = require('faker');
 const { Console } = require('console');
+const Episode = require('../../../models/episode');
 
 
 class CourseController extends controller {
@@ -27,8 +28,10 @@ class CourseController extends controller {
     const limit = parseInt(req.query.limit) || 10;
 
     try {
-      const courses = await Course.paginate(page, limit);
-      res.render('admin/course/index', { courses : courses.results, pages: courses.totalPages, page: courses.page});
+      //const courses = await Course.paginate(page, limit);
+      const courses = await Course.paginate({}, { page, limit: 10, sort: { createAt: 1 } });
+      //return res.json(courses);
+      res.render('admin/course/index', { courses });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -62,6 +65,7 @@ class CourseController extends controller {
     // اگر دیتاها معتبر بود
     if (validatedData) {
       req.body.image = req.body.path;
+      req.body.user = req.user._id;
       const course = new Course(req.body);
       try {
         const newCourse = await course.save();
@@ -157,11 +161,20 @@ class CourseController extends controller {
   async delete(req, res) {
     try {
       const courseId = req.params.id;
+
+      // Delete the episodes related to the course
+      await Episode.deleteMany({ course: courseId });
+
       const deletedCourse = await Course.findByIdAndDelete(courseId);
+      //const deletedCourse = await Course.findById(courseId).populate('episodes').exec();
 
       if (!deletedCourse) {
-        return res.status(404).json({ message: 'Course not found' });
+        return res.status(404).json({ message: 'همچین دوره ای وجود ندارد' });
       }
+      //return res.json(deletedCourse)
+      // Delete the course episodes
+      //deletedCourse.episodes.forEach(episode => console.log(episode));
+      //deletedCourse.remode();
 
       // Delete the associated image
       if (deletedCourse.image) {

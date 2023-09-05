@@ -1,9 +1,10 @@
-const controller = require('app/http/controllers/controller')
+const controller = require('app/http/controllers/controller');
+const User = require('../../../models/user');
 //const controller = require('./../../controllers/controller')
 
 
 class adminController extends controller {
-    index(req, res, next){
+    async index(req, res, next) {
         res.render('admin/index')
     }
 }

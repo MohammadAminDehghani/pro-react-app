@@ -10,6 +10,7 @@ class episodeController extends controller {
         try {
             let page = req.query.page || 1;
             const episodes = await Episode.paginate({}, { page, limit: 10, sort: { createAt: 1 }, populate: 'course' });
+            //return res.json(episodes)
             res.render('admin/episode/index', { episodes });
         } catch (err) {
             next(err);

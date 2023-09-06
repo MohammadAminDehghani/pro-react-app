@@ -5,6 +5,9 @@ const router = express.Router();
 
 router.get('/', homeController.index);
 
+
+router.get('/course/:course', homeController.coursePage);
+
 // router.get('/', (req, res) => {
 //     res.render('home/index');
 // })

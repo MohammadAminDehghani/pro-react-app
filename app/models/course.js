@@ -42,7 +42,7 @@ Course.virtual('episodes', {
 })
 
 Course.methods.path = function(){
-  return `/course/${this.slug}`;
+  return `/course/${this.id}`;
 }
 
 module.exports = mongoose.model('Course', Course);

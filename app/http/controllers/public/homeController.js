@@ -2,6 +2,7 @@ const controller = require('app/http/controllers/controller');
 const Course = require('app/models/course');
 const Episode = require('app/models/episode');
 const path = require('path');
+const bcrypt = require('bcrypt');
 //const controller = require('./../../controllers/controller')
 
 
@@ -18,18 +19,29 @@ class homeController extends controller {
         //console.log(req);
         //return res.json(course);
         const auth = {
-            check : req.isAuthenticated(),
+            check: req.isAuthenticated(),
         }
-        console.log(auth.check)
+        //console.log(auth.check)
         //res.json(auth.check);
         const accessUser = await this.accessUser(req, course);
         res.render('home/page/coursePage', { req, course, accessUser, auth });
     }
 
-    async downloadEpisode(req, res, next){
+    async downloadEpisode(req, res, next) {
         const episode = await Episode.findById(req.params.id);
+        if (!episode) return res.json('چنین ویدیویی برای دانلود وجود ندارد');
+        if (!this.checkSecretUrl(req, episode)) return res.json('لینک دانلود معتبر نیست');
         const filePath = path.resolve(`./public/${episode.videoUrl}`);
         res.download(filePath)
+    }
+
+    checkSecretUrl(req, episode) {
+        const time = new Date().getTime();
+        if (req.query.t < time) return res.json('لینک دانلود منقضی شده است')
+        const secret = `asdqwoidjopedm!@sdfwe#asd%${episode.id}${req.query.t}`;
+    console.log(secret)
+    console.log(req.query.secret)
+        return bcrypt.compareSync(secret, req.query.secret);
     }
 
     accessUser(req, course) {

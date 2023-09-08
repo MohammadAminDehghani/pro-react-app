@@ -27,7 +27,7 @@
                     <!--Featured Image-->
                     <div class="card mb-4 wow fadeIn">
 
-                        <img src="<%- course.image['720'] %>" class="img-fluid" alt="">
+                        <img src="<%= course.image['720'] %>" class="img-fluid" alt="">
 
                     </div>
                     <!--/.Featured Image-->
@@ -57,7 +57,7 @@
                                                         <td><%- episode.title %></td>
                                                         <td><%- episode.time %></td>
                                                         <td>
-                                                            <a href="#">دانلود</a>
+                                                            <a href="<%- `/download/${episode._id}` %>">دانلود</a>
                                                         </td>
                                                     </tr>
                                                     <% }) %>
@@ -70,6 +70,8 @@
                         </div>
 
                     </div>
+
+           
                     
                 </div>
                 <!--Grid column-->
@@ -81,19 +83,24 @@
                             <h4>
                                 <strong>قیمت : <%- course.price %></strong>
                             </h4>
-
+                            <% if(auth.check) { %> 
+                                <% if(course.type == 'vip') { %>
+                                    <% if(! req.user.isVip()) { %> 
                                         <p class="alert alert-danger mt-3">پنل کاربری خود را به اعضاء ویژه ارتقا دهید</p>
-
+                                    <% } %> 
+                                <% } else if(course.type == 'cash') { %>
+                                    <% if(accessUser) { %> 
                                     <form action="/course/payment" method="POST">
                                         <input type="hidden" name="course" value="<%- course.id %>">
                                         <button type="submit" class="btn btn-sm btn-danger">خریداری دوره</button>
                                     </form>
-
+                                    <% } else { %>
                                         <p class="alert alert-success mt-3">شما این دوره را قبلا خریداری کرده اید</p>
-
-
+                                    <% } %>
+                                <% } %>   
+                            <% } else { %>
                                 <a href="/auth/login" class="btn btn-danger btn-lg mt-3" style="width: 100%">وارد حساب کاربری خود شوید</a>
-
+                            <% } %>
                         </div>
                         <!-- Content -->
                     </div>

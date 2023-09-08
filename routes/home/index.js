@@ -7,6 +7,7 @@ router.get('/', homeController.index);
 
 
 router.get('/course/:course', homeController.coursePage);
+router.get('/download/:id', homeController.downloadEpisode);
 
 // router.get('/', (req, res) => {
 //     res.render('home/index');

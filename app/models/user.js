@@ -59,6 +59,14 @@ User.virtual('courses', {
   foreignField: 'user',
 })
 
+User.methods.isVip = function(){
+  return false;
+}
+
+User.methods.payCash = function(course){
+  return false;
+}
+
 
 module.exports = mongoose.model('User', User);
 //module.exports = User;

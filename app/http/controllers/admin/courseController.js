@@ -82,13 +82,24 @@ class CourseController extends controller {
         if (imageSizes && imageSizes.original) {
           for (var key in imageSizes) {
             if (imageSizes.hasOwnProperty(key)) {
-              fs.unlinkSync('public' + imageSizes[key], (err) => {
-                if (err) {
-                  console.error('Error deleting file:', err);
-                } else {
-                  console.log('File deleted successfully');
-                }
-              });
+              // fs.unlinkSync('public' + imageSizes[key], (err) => {
+              //   if (err) {
+              //     console.error('Error deleting file:', err);
+              //   } else {
+              //     console.log('File deleted successfully');
+              //   }
+              // });
+
+              var filePath = 'public' + deleteImagesUpdateCourse.image[key];
+              if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath, err => {
+                  if (err) {
+                    console.error('Error deleting file:', err);
+                  } else {
+                    console.log('File deleted successfully');
+                  }
+                });
+              }
             }
           }
         }
@@ -101,6 +112,7 @@ class CourseController extends controller {
   async edit(req, res) {
     try {
       const course = await Course.findById(req.params.id);
+      console.log(req.flash('errors'))
       res.render('admin/course/edit', { errors: req.flash('errors'), course: course });
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -114,19 +126,22 @@ class CourseController extends controller {
       try {
         const deleteImagesUpdateCourse = await Course.findById(req.params.id);
         // Delete the associated image
-        if (deleteImagesUpdateCourse.image) {
+        if (req.file && deleteImagesUpdateCourse.image) {
           // Remove the images file from the file system
           Object.keys(deleteImagesUpdateCourse.image).forEach(function (key, index) {
-            fs.unlinkSync('public' + deleteImagesUpdateCourse.image[key]);
+            var filePath = 'public' + deleteImagesUpdateCourse.image[key];
+            if (fs.existsSync(filePath)) {
+              fs.unlinkSync(filePath);
+            }
           });
-
+          req.body.image = req.body.path;
         }
 
-        req.body.image = req.body.path;
         const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.redirect('/admin/course');
       } catch (err) {
-        res.render('admin/course/edit');
+        console.log(err);
+        this.back(req, res);
       }
     } else {
 
@@ -138,22 +153,30 @@ class CourseController extends controller {
           if (imageSizes && imageSizes.original) {
             for (var key in imageSizes) {
               if (imageSizes.hasOwnProperty(key)) {
-                fs.unlinkSync('public' + imageSizes[key], (err) => {
-                  if (err) {
-                    console.error('Error deleting file:', err);
-                  } else {
-                    console.log('File deleted successfully');
-                  }
-                });
+
+                var filePath = 'public' + deleteImagesUpdateCourse.image[key];
+                if (fs.existsSync(filePath)) {
+                  fs.unlinkSync(filePath, err => {
+                    if (err) {
+                      console.error('Error deleting file:', err);
+                    } else {
+                      console.log('File deleted successfully');
+                    }
+                  });
+                }
+
+                // fs.unlinkSync('public' + imageSizes[key], (err) => {
+                //   if (err) {
+                //     console.error('Error deleting file:', err);
+                //   } else {
+                //     console.log('File deleted successfully');
+                //   }
+                // });
               }
             }
           }
         }, 1000); // Delay of 1000 milliseconds
       }
-
-
-
-
       this.back(req, res);
     }
 
@@ -180,8 +203,12 @@ class CourseController extends controller {
       // Delete the associated image
       if (deletedCourse.image) {
         // Remove the images file from the file system
-        Object.keys(deletedCourse.image).forEach(function (key, index) {
-          fs.unlinkSync('public' + deletedCourse.image[key]);
+        // Remove the images file from the file system
+        Object.keys(deleteImagesUpdateCourse.image).forEach(function (key, index) {
+          var filePath = 'public' + deleteImagesUpdateCourse.image[key];
+          if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+          }
         });
 
       }

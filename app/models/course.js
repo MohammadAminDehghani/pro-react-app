@@ -41,6 +41,12 @@ Course.virtual('episodes', {
   foreignField: 'course',
 })
 
+Course.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'course',
+})
+
 Course.methods.path = function(){
   return `/course/${this.id}`;
 }

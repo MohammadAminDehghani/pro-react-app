@@ -8,13 +8,14 @@ router.use((req, res, next) => {
   next();
 })
 
-const attachFileToFormData = require('app/http/middleware/attachFileToFormData')
+const attachFileToFormData = require('app/http/middleware/attachFileToFormData');
 
 
 //controller
-const adminController = require('app/http/controllers/admin/adminController')
-const courseController = require('app/http/controllers/admin/courseController')
-const episodeController = require('app/http/controllers/admin/episodeController')
+const adminController = require('app/http/controllers/admin/adminController');
+const courseController = require('app/http/controllers/admin/courseController');
+const episodeController = require('app/http/controllers/admin/episodeController');
+
 
 //validators
 const courseValidator = require('app/http/validators/admin/courseValidator')
@@ -50,11 +51,6 @@ router.put('/episode/:id', episodeValidator.handle(), episodeController.update);
 
 // delete episode
 router.delete('/episode/:id', episodeController.destroy);
-
-
-
-
-
 
 
 module.exports = router

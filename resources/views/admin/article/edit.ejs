@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">افزودن مقاله های جدید به وب سایت</h2>
+        </div>
+    </div>
+</div>
+<span></span>
+<% if (typeof errors !== 'undefined' && errors !== null && errors.length !== 0) { %>
+    <div class="alert alert-danger">
+        <ul>
+            <% errors.forEach((error) => { %>
+                <li>
+                    <%= error.message %>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+<% } %>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="padding-right: 0px;padding-left: 0px;">
+            <div class="card">
+                <h5 class="card-header">ایجاد مقاله جدید</h5>
+                <div class="card-body">
+                    <form action="/admin/article/<%= article._id %>?_method=PUT" method="POST"
+                        enctype="multipart/form-data" id="validationform" data-parsley-validate="" novalidate="">
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="title" class="control-label font-weight-bold">عنوان مقاله</label>
+                                <input type="text" class="form-control" name="title" value=<%=article.title %>
+                                id="title"
+                                placeholder="عنوان را وارد کنید"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="body" class="control-label font-weight-bold">متن</label>
+                                <textarea rows="5" class="form-control" name="body" id="body"
+                                    placeholder="متن مقاله را وارد کنید"><%= article.body %></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="image" class="control-label font-weight-bold">تصویر
+                                    مقاله</label>
+                                <input type="file" class="form-control" name="image" id="image"
+                                    placeholder="تصویر مقاله را وارد کنید">
+                            </div>
+                            <div class="col">
+                                <img src="<%= article.image[360] %>" alt="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="tags" class="control-label font-weight-bold">تگ ها</label>
+                                <input type="text" class="form-control" name="tags" id="tags"
+                                    placeholder="تگ ها را وارد کنید">
+                            </div>
+                        </div>
+
+                        <div class="form-group row text-right">
+                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                <button type="submit" class="btn btn-space btn-primary">ارسال</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>

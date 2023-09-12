@@ -1,5 +1,6 @@
 const controller = require('app/http/controllers/controller');
 const Course = require('app/models/course');
+const Article = require('app/models/article');
 const Episode = require('app/models/episode');
 const Comment = require('app/models/comment');
 const path = require('path');
@@ -12,8 +13,9 @@ class homeController extends controller {
     async index(req, res) {
         //return res.json(6);
         const courses = await Course.find({}).sort({ createdAt: -1 }).limit(3).exec();
+        const articles = await Article.find({}).sort({ createdAt: -1 }).limit(3).exec();
         //return res.json(courses);
-        res.render('home/index', { courses });
+        res.render('home/index', { courses, articles });
     }
 
     async coursePage(req, res) {
@@ -48,6 +50,39 @@ class homeController extends controller {
         const auth = { check: req.isAuthenticated() }
         const accessUser = await this.accessUser(req, course);
         res.render('home/page/coursePage', { req, course, accessUser, auth });
+    }
+
+    async articlePage(req, res) {
+
+        // const addComment = new Comment({
+        //     user : req.user.id,
+        //     article : '64f8f91ffbb67894fb17f354',
+        //     check : false,
+        //     comment : faker.lorem.text()
+        // });
+
+        // addComment.save();
+
+        const article = await Article.findById(req.params.article).populate([
+            { path: 'user', select: 'name' },
+            {
+                path: 'comments',
+                match: { parent: null, check: true },
+                populate: [
+                    { path: 'user', select: 'name' },
+                    {
+                        path: 'comments',
+                        match: { check: true },
+                        populate: { path: 'user', select: 'name' }
+                    }
+                ]
+            },
+
+        ]).exec();
+        //return res.json(article)
+
+        const auth = { check: req.isAuthenticated() }
+        res.render('home/page/articlePage', { req, article, auth });
     }
 
     async downloadEpisode(req, res, next) {

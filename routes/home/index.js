@@ -16,6 +16,9 @@ router.get('/download/:id', homeController.downloadEpisode);
 router.post('/comment', commentController.comment);
 
 
+// صفحه مقاله
+router.get('/article/:article', homeController.articlePage);
+
 //logout
 router.get('/logout', (req, res) => {
     req.logout((err) => {

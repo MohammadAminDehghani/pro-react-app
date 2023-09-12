@@ -1,0 +1,100 @@
+<!--Main layout-->
+<main class="pt-3">
+    <div class="container">
+        <!--Section: Post-->
+        <section class="mt-1">
+            <!-- Title -->
+            <h1 class="mb-3"></h1>
+
+            <!-- Post Content -->
+            <div id="content">
+                <h3><%- article.title %></h3>
+            </div>
+            <hr>
+
+            <!-- Author -->
+            <p class="text-muted small">
+                <span> توسط <a href="#"><%- article.user.name %></a> - </span>
+
+                <span>ارسال شده در <%= article.createdAt %></span>
+            </p>
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-8 mb-4">
+
+                    <!--Featured Image-->
+                    <div class="card mb-4 wow fadeIn">
+
+                        <img src="<%= article.image['720'] %>" class="img-fluid" alt="">
+
+                    </div>
+                    <!--/.Featured Image-->
+
+                    <div class="card mb-4 wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+                        <!--Card content-->
+                        <div class="card-body">
+                            <p><%- article.body %></p>
+                        </div>
+
+                    </div>
+
+
+                <%- include('./../layouts/comment', { data : article, auth }) %>
+
+           
+                    
+                </div>
+                <!--Grid column-->
+                <div class="col-md-4 mb-4">
+
+
+                    <!--Card : Dynamic content wrapper-->
+                    <div class="card mb-4 wow fadeIn">
+
+                        <div class="card-header">ویژگی های مقاله</div>
+                        <!--Card content-->
+                        <div class="card-body">
+                            <label for="student" class="grey-text">مدرس : <%- article.user.name %></label><br>
+                            <label for="student" class="grey-text">دانشجو : <%- article.viewCount %> نفر</label><br>
+                            <% if(article.type == 'Vip') { %> 
+                                <label for="student" class="grey-text">نوع مقاله : اعضاء ویژه</label><br>
+                            <% } else if(article.type == 'cash') { %>
+                                <label for="student" class="grey-text">نوع مقاله : نقدی</label><br>
+                            <% } else { %> 
+                                <label for="student" class="grey-text">نوع مقاله : رایگان</label><br>
+                            <% } %>
+                            <label for="student" class="grey-text">سطح مقاله : متوسط</label><br>
+                            <label for="student" class="grey-text">زمان : <%- article.time %></label><br>
+                            <label for="student" class="grey-text">بازدید : <%- article.viewCount %></label><br>
+                            <label for="student" class="grey-text">دیدگاه : <%- article.commentCount %></label>
+                        </div>
+
+                    </div>
+                    <!--/.Card : Dynamic content wrapper-->
+
+                    <!--Card-->
+                    <div class="card mb-4 wow fadeIn">
+                        <!-- Categories Widget -->
+                        <div class="card">
+                            <h5 class="card-header">دسته بندی ها</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+        </section>
+        <!--Section: Post-->
+    </div>
+</main>
+<!--Main layout-->

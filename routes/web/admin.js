@@ -15,6 +15,7 @@ const attachFileToFormData = require('app/http/middleware/attachFileToFormData')
 const adminController = require('app/http/controllers/admin/adminController');
 const courseController = require('app/http/controllers/admin/courseController');
 const episodeController = require('app/http/controllers/admin/episodeController');
+const commentController = require('app/http/controllers/admin/commentController');
 
 
 //validators
@@ -52,5 +53,9 @@ router.put('/episode/:id', episodeValidator.handle(), episodeController.update);
 // delete episode
 router.delete('/episode/:id', episodeController.destroy);
 
+
+router.get('/comment', commentController.index);
+router.delete('/comment/:id', commentController.destroy);
+router.put('/comment/:id/approve', commentController.update);
 
 module.exports = router

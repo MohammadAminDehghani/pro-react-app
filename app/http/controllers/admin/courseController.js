@@ -218,6 +218,21 @@ class CourseController extends controller {
     }
   }
 
+  async allCourses(req, res) {
+    let page = req.query.page || 1;
+    let sort = -req.query.old || 1;
+
+    let query = {}
+    if (req.query.search)
+      query.title = new RegExp(req.query.search, 'gi'); ;
+
+    if (req.query.type && req.query.type !== 'all')
+      query.type = req.query.type;
+
+    const courses = await Course.paginate({ ...query }, { page, limit: 9, sort: { createdAt: sort } });
+    res.render('home/page/courses', { courses });
+  }
+
 }
 
 module.exports = new CourseController();

@@ -13,10 +13,10 @@
             <hr>
 
             <!-- Author -->
+            <!-- Author -->
             <p class="text-muted small">
                 <span> توسط <a href="#"><%- article.user.name %></a> - </span>
-
-                <span>ارسال شده در <%= article.createdAt %></span>
+                <span>نوشته در  <%= convertTime(article.createAt) %></span>
             </p>
             <!--Grid row-->
             <div class="row">

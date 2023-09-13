@@ -13,6 +13,9 @@ const rememberLogin = require('./http/middleware/rememberLogin')
 const multer = require('multer')
 const methodOverride = require('method-override')
 
+const moment = require('moment-jalaali');
+moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' })
+
 const app = express()
 const port = 3000
 
@@ -52,16 +55,17 @@ module.exports = class Application {
         app.set('view engine', config.layout.VIEW_ENGINE);
         app.set('views', path.join(config.layout.VIEW_DIR));
         app.use(config.layout.EJS.expressLayouts);
-        app.set('layout',config.layout.EJS.master);
-        app.set('layoutStyles',config.layout.EJS.layoutStyles);
-        app.set('expressLayouts',config.layout.EJS.expressLayouts);
+        app.set('layout', config.layout.EJS.master);
+        app.set('layoutStyles', config.layout.EJS.layoutStyles);
+        app.set('expressLayouts', config.layout.EJS.expressLayouts);
         // parse data in the requests
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
 
         //define session and cookies and save them in db
         app.set('trust proxy', 1) // trust first proxy
-        app.use(session({ ...config.session
+        app.use(session({
+            ...config.session
             // secret: 'amin-agha',
             // resave: false,
             // saveUninitialized: true,
@@ -82,6 +86,21 @@ module.exports = class Application {
         // set up middleware to pass user to views
         app.use((req, res, next) => {
             res.locals.currentUser = req.user;
+            next();
+        });
+
+        // set up middleware to pass user to views
+        app.use((req, res, next) => {
+            app.locals = {
+                auth: {
+                    check: req.isAuthenticated(),
+                    user: req.user
+                },
+                convertTime(time) {
+                    return moment(time).format('jD jMMM jYYYY')
+                },
+                req
+            }
             next();
         });
 

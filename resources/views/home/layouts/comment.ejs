@@ -13,11 +13,12 @@
                                     data-parent="<%- comment.id %>">پاسخ</button>
                                 <% } else { %>
                                     <small class="float-left m-2 text-danger"> برای ثبت پاسخ باید وارد شوید</small>
-                                    <a href="/auth/login" type="button" class="float-left btn-sm btn btn-xs btn-danger">ورود</a>
-                                <% } %>
+                                    <a href="/auth/login" type="button"
+                                        class="float-left btn-sm btn btn-xs btn-danger">ورود</a>
+                                    <% } %>
                     </h5>
                     <p class="small">
-                        <%= comment.createdAt %>
+                        <%= convertTime(comment.createdAt) %>
                     </p>
                     <%- comment.comment %>
                         <% comment.comments.forEach(comment=> { %>
@@ -65,10 +66,11 @@
         </div>
     </div>
 </div>
-<% if(auth.check) { %>
+
     <div class="card mb-3 wow fadeIn">
         <div class="card-header font-weight-bold">ثبت دیدگاه</div>
         <div class="card-body">
+            <% if(auth.check) { %>
             <!-- Default form reply -->
             <form action="/comment" method="POST">
                 <!-- Comment -->
@@ -82,19 +84,23 @@
                 </div>
             </form>
             <!-- Default form reply -->
+            <% }else{ %>
+                <small class="m-2 text-danger"> برای ثبت دیدگاه باید وارد شوید</small>
+                <a href="/auth/login" type="button" class="btn-sm btn btn-xs btn-danger">ورود</a>
+            <% } %>
         </div>
     </div>
-    <% } %>
 
-        <script>
-            $(document).ready(function () {
-                $('#sendCommentModal').on('show.bs.modal', function (event) {
-                    console.log(1)
-                    let button = $(event.relatedTarget);
-                    console.log(button)
-                    let parentID = button.data('parent');
-                    let modal = $(this);
-                    modal.find("[name='parent']").val(parentID);
-                })
-            });
-        </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sendCommentModal').on('show.bs.modal', function (event) {
+                console.log(1)
+                let button = $(event.relatedTarget);
+                console.log(button)
+                let parentID = button.data('parent');
+                let modal = $(this);
+                modal.find("[name='parent']").val(parentID);
+            })
+        });
+    </script>

@@ -6,6 +6,7 @@ const Comment = require('app/models/comment');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const faker = require('faker');
+
 //const controller = require('./../../controllers/controller')
 
 
@@ -47,9 +48,8 @@ class homeController extends controller {
 
         ]).exec();
 
-        const auth = { check: req.isAuthenticated() }
         const accessUser = await this.accessUser(req, course);
-        res.render('home/page/coursePage', { req, course, accessUser, auth });
+        res.render('home/page/coursePage', { req, course, accessUser });
     }
 
     async articlePage(req, res) {
@@ -80,10 +80,8 @@ class homeController extends controller {
                 },
 
             ]).exec();
-        //return res.json(article)
 
-        const auth = { check: req.isAuthenticated() }
-        res.render('home/page/articlePage', { req, article, auth });
+        res.render('home/page/articlePage', { req, article });
     }
 
     async downloadEpisode(req, res, next) {

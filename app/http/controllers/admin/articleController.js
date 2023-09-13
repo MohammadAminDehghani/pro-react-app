@@ -214,6 +214,19 @@ class ArticleController extends controller {
     }
   }
 
+  async allArticles(req, res){
+    let page = req.query.page || 1 ;
+    let sort = -req.query.old || 1;
+
+    let query = {}
+    if (req.query.search)
+      query.title = new RegExp(req.query.search, 'gi'); ;
+
+
+    const articles = await Article.paginate({ ...query }, { page, limit: 9, sort: { createAt: sort } });
+    res.render('home/page/articles', { articles });
+  }
+
 }
 
 module.exports = new ArticleController();

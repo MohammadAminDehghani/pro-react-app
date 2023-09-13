@@ -68,7 +68,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 <%- include('./../layouts/comment', { data : course, auth }) %>
@@ -115,7 +114,7 @@
                         <!--Card content-->
                         <div class="card-body">
                             <label for="student" class="grey-text">مدرس : <%- course.user.name %></label><br>
-                            <label for="student" class="grey-text">دانشجو : <%- course.viewCount %> نفر</label><br>
+                            <label for="student" class="grey-text">دانشجو : <%- course.viewCount + 1 %> نفر</label><br>
                             <% if(course.type == 'Vip') { %> 
                                 <label for="student" class="grey-text">نوع دوره : اعضاء ویژه</label><br>
                             <% } else if(course.type == 'cash') { %>
@@ -126,7 +125,7 @@
                             <label for="student" class="grey-text">سطح دوره : متوسط</label><br>
                             <label for="student" class="grey-text">زمان : <%- course.time %></label><br>
                             <label for="student" class="grey-text">تعداد درس : <%- course.episodes.length %></label><br>
-                            <label for="student" class="grey-text">بازدید : <%- course.viewCount %></label><br>
+                            <label for="student" class="grey-text">بازدید : <%- course.viewCount + 1 %></label><br>
                             <label for="student" class="grey-text">دیدگاه : <%- course.commentCount %></label>
                         </div>
 

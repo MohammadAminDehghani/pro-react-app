@@ -14,9 +14,8 @@ class commentController extends controller {
                         path: 'user',
                         select: 'name'
                     },
-                    {
-                        path: 'course',
-                    }
+                    'course',
+                    'article',
                 ]
             }
         );
@@ -46,7 +45,7 @@ class commentController extends controller {
         if (comment) {
 
             try {
-                this.deleteCommentWithChildren(comment.id)
+                this.deleteCommentWithChildren(comment.id , res)
             } catch (error) {
                 res.status(500).json({ message: 'خطای سرور' });
             }
@@ -62,24 +61,30 @@ class commentController extends controller {
     }
 
 
-    async deleteCommentWithChildren(commentId) {
-        // Delete the comment
-        await Comment.findByIdAndDelete(commentId);
+    async deleteCommentWithChildren(commentId, res) {
+        // Select the comment
+        const comment = await Comment.findById(commentId).populate('autoSection').exec();
 
         // Find all child comments with the deleted comment as the parent
-        const childComments = await Comment.find({ parent: commentId });
+        const childComments = await Comment.find({ parent: commentId }); 
 
         // Recursively delete each child comment
         for (const childComment of childComments) {
             await this.deleteCommentWithChildren(childComment._id);
         }
+
+        comment.autoSection.inc('commentCount', -(childComments.length+1));
+        comment.save();
+
+        await Comment.findByIdAndDelete(commentId);
     }
 
     async update(req, res, next) {
-        const comment = await Comment.findById(req.params.id);
+        const comment = await Comment.findById(req.params.id).populate('autoSection').exec();
         if (!comment) return res.json('چنین دیدگاهی در سیستم ثبت نشده است');
 
         comment.check = true;
+        comment.autoSection.inc('commentCount');
         comment.save();
         return this.back(req, res);
     }

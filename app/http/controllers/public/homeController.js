@@ -29,7 +29,7 @@ class homeController extends controller {
 
         // addComment.save();
 
-        const course = await Course.findById(req.params.course).populate([
+        const course = await Course.findOneAndUpdate({ _id: req.params.course }, { $inc: { viewCount: 1 } }).populate([
             { path: 'user', select: 'name' },
             { path: 'episodes' },
             {
@@ -63,22 +63,23 @@ class homeController extends controller {
 
         // addComment.save();
 
-        const article = await Article.findById(req.params.article).populate([
-            { path: 'user', select: 'name' },
-            {
-                path: 'comments',
-                match: { parent: null, check: true },
-                populate: [
-                    { path: 'user', select: 'name' },
-                    {
-                        path: 'comments',
-                        match: { check: true },
-                        populate: { path: 'user', select: 'name' }
-                    }
-                ]
-            },
+        const article = await Article.findOneAndUpdate({ _id: req.params.article }, { $inc: { viewCount: 1 } })
+            .populate([
+                { path: 'user', select: 'name' },
+                {
+                    path: 'comments',
+                    match: { parent: null, check: true },
+                    populate: [
+                        { path: 'user', select: 'name' },
+                        {
+                            path: 'comments',
+                            match: { check: true },
+                            populate: { path: 'user', select: 'name' }
+                        }
+                    ]
+                },
 
-        ]).exec();
+            ]).exec();
         //return res.json(article)
 
         const auth = { check: req.isAuthenticated() }
@@ -89,6 +90,7 @@ class homeController extends controller {
         const episode = await Episode.findById(req.params.id);
         if (!episode) return res.json('چنین ویدیویی برای دانلود وجود ندارد');
         if (!this.checkSecretUrl(req, res, episode)) return res.json('لینک دانلود معتبر نیست');
+        episode.inc('downloadCount');
         const filePath = path.resolve(`./public/${episode.videoUrl}`);
         res.download(filePath)
     }
@@ -97,8 +99,8 @@ class homeController extends controller {
         const time = new Date().getTime();
         if (req.query.t < time) return res.json('لینک دانلود منقضی شده است')
         const secret = `asdqwoidjopedm!@sdfwe#asd%${episode.id}${req.query.t}`;
-        console.log(secret)
-        console.log(req.query.secret)
+        // console.log(secret)
+        // console.log(req.query.secret)
         return bcrypt.compareSync(secret, req.query.secret);
     }
 

@@ -10,6 +10,8 @@ const Course = new mongoose.Schema({
   time: { type: String, default: '00:00:00' },
   price: { type: Number, required: true },
   image: { type: Object, required: true },
+  viewCount: { type: Number, default: 0 },
+  commentCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 }, {
   toJSON: { virtuals: true },
@@ -47,8 +49,13 @@ Course.virtual('comments', {
   foreignField: 'course',
 })
 
-Course.methods.path = function(){
+Course.methods.path = function () {
   return `/course/${this.id}`;
+}
+
+Course.methods.inc = async function(field, num = 1){
+  this[field] += num;
+  await this.save()
 }
 
 module.exports = mongoose.model('Course', Course);

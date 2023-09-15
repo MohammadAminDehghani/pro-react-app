@@ -1,6 +1,7 @@
 
 const controller = require('app/http/controllers/controller');
 const Course = require('app/models/course');
+const Category = require('app/models/category');
 const fs = require('fs');
 const faker = require('faker');
 const { Console } = require('console');
@@ -47,15 +48,17 @@ class CourseController extends controller {
     }
   }
 
-  create(req, res) {
+  async create(req, res) {
     try {
-      res.render('admin/course/create');
+      const categories = await Category.find({});
+      res.render('admin/course/create', { categories });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
   }
 
   async post(req, res) {
+
     const validatedData = await this.validationForm(req, res)
 
     // اگر عکس وجود داشت
@@ -112,7 +115,8 @@ class CourseController extends controller {
   async edit(req, res) {
     try {
       const course = await Course.findById(req.params.id);
-      res.render('admin/course/edit', { course });
+      const categories = await Category.find({});
+      res.render('admin/course/edit', { course, categories });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -223,7 +227,7 @@ class CourseController extends controller {
 
     let query = {}
     if (req.query.search)
-      query.title = new RegExp(req.query.search, 'gi'); ;
+      query.title = new RegExp(req.query.search, 'gi');;
 
     if (req.query.type && req.query.type !== 'all')
       query.type = req.query.type;

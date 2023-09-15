@@ -1,6 +1,7 @@
 
 const controller = require('app/http/controllers/controller');
 const Article = require('app/models/article');
+const Category = require('app/models/category');
 const fs = require('fs');
 const faker = require('faker');
 const { Console } = require('console');
@@ -47,9 +48,10 @@ class ArticleController extends controller {
     }
   }
 
-  create(req, res) {
+  async create(req, res) {
     try {
-      res.render('admin/article/create');
+      const categories = await Category.find({});
+      res.render('admin/article/create', { categories });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -108,7 +110,8 @@ class ArticleController extends controller {
   async edit(req, res) {
     try {
       const article = await Article.findById(req.params.id);
-      res.render('admin/article/edit', { article: article });
+      const categories = await Category.find({});
+      res.render('admin/article/edit', { article, categories });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -116,7 +119,7 @@ class ArticleController extends controller {
 
   async update(req, res) {
     const validatedData = await this.validationForm(req, res);
-    
+
     if (validatedData) {
       try {
         const deleteImagesUpdateArticle = await Article.findById(req.params.id);
@@ -213,13 +216,13 @@ class ArticleController extends controller {
     }
   }
 
-  async allArticles(req, res){
-    let page = req.query.page || 1 ;
+  async allArticles(req, res) {
+    let page = req.query.page || 1;
     let sort = -req.query.old || 1;
 
     let query = {}
     if (req.query.search)
-      query.title = new RegExp(req.query.search, 'gi'); ;
+      query.title = new RegExp(req.query.search, 'gi');;
 
 
     const articles = await Article.paginate({ ...query }, { page, limit: 9, sort: { createAt: sort } });

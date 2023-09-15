@@ -1,5 +1,6 @@
 const controller = require('app/http/controllers/controller');
 const Course = require('app/models/course');
+const Category = require('app/models/category');
 const Article = require('app/models/article');
 const Episode = require('app/models/episode');
 const Comment = require('app/models/comment');
@@ -8,7 +9,6 @@ const bcrypt = require('bcrypt');
 const faker = require('faker');
 
 //const controller = require('./../../controllers/controller')
-
 
 class homeController extends controller {
     async index(req, res) {
@@ -20,15 +20,6 @@ class homeController extends controller {
     }
 
     async coursePage(req, res) {
-
-        // const addComment = new Comment({
-        //     user : req.user.id,
-        //     course : '64f8f91ffbb67894fb17f354',
-        //     check : false,
-        //     comment : faker.lorem.text()
-        // });
-
-        // addComment.save();
 
         const course = await Course.findOneAndUpdate({ _id: req.params.course }, { $inc: { viewCount: 1 } }).populate([
             { path: 'user', select: 'name' },
@@ -48,8 +39,10 @@ class homeController extends controller {
 
         ]).exec();
 
+        const categories = await Category.find({ parent: null }).populate({ path: 'childs' });
+
         const accessUser = await this.accessUser(req, course);
-        res.render('home/page/coursePage', { req, course, accessUser });
+        res.render('home/page/coursePage', { course, accessUser, categories });
     }
 
     async articlePage(req, res) {
@@ -81,7 +74,8 @@ class homeController extends controller {
 
             ]).exec();
 
-        res.render('home/page/articlePage', { req, article });
+        const categories = await Category.find({ parent: null }).populate({ path: 'childs' });
+        res.render('home/page/articlePage', { article, categories });
     }
 
     async downloadEpisode(req, res, next) {

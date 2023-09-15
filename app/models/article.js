@@ -8,10 +8,9 @@ const Article = mongoose.Schema({
     body: { type: String, required: true },
     image: { type: Object, required: true },
     tags: { type: String, default: null },
-    // categories : [{ type : Schema.Types.ObjectId , ref : 'Category'}],
     viewCount: { type: Number, default: 0 },
     commentCount: { type: Number, default: 0 },
-
+    categories : [{ type : Schema.Types.ObjectId , ref : 'Category'}],
 }, {
     timestamps: true,
     toJSON: { virtuals: true }

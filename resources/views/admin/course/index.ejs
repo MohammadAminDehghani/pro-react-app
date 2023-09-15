@@ -65,36 +65,7 @@
                     </table>
                 </div>
             </div>
-            <div class="row justify-content-center m-2">
-                <% if (courses.pages > 0) { %>
-                <div class="d-flex">
-                  <% if (courses.page == 1) { %>
-                  <div class="page-item disabled"><a class="page-link">اولین</a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= 1 %>">اولین</a></div>
-                  <% } %>
-                  <% var i = ((courses.page) > 5 ? (courses.page) - 4 : 1) %>
-                  <% if (i !== 1) { %>
-                  <div class="page-item disabled"><a class="page-link">...</a></div>
-                  <% } %>
-                  <% for (; i <= ((courses.page) + 4) && i <= courses.pages; i++) { %>
-                  <% if (i == courses.page) { %>
-                  <div class="page-item active"><a class="page-link"><%= i %></a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= i %>"><%= i %></a></div>
-                  <% } %>
-                  <% if (i == (courses.page) + 4 && i < courses.pages) { %>
-                  <div class="page-item disabled"><a class="page-link">...</a></div>
-                  <% } %>
-                  <% } %>
-                  <% if (courses.page == courses.pages) { %>
-                  <div class="page-item disabled"><a class="page-link">آخرین</a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/course/?page=<%= courses.pages %>">آخرین</a></div>
-                  <% } %>
-                </div>
-                <% } %>
-              </div>
+            <%- include(viewPath("layouts/paginate"), { pagination : courses }) %>
         </div>
     </div>
 </div>

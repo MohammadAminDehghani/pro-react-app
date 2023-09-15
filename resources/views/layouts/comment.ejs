@@ -11,7 +11,7 @@
                     <button type="button" class="float-left btn-sm btn btn-xs btn-success" data-toggle="modal"
                         data-target="#sendCommentModal" data-parent="<%- comment.id %>">پاسخ</button>
                 </h5>
-                <p class="small"><%= date(comment.createdAt).fromNow()%></p>
+                <p class="small"><%= convertTime(comment.createdAt).fromNow()%></p>
                 <%- comment.comment %>
                 <% comment.comments.forEach(comment => { %>
                 <div class="media mt-4">

@@ -2,19 +2,17 @@ const express = require('express');
 const path = require('path')
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const router = require('./../routes/index');
+const router = require('routes/index');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 // const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-const rememberLogin = require('./http/middleware/rememberLogin')
-const multer = require('multer')
-const methodOverride = require('method-override')
-
-const moment = require('moment-jalaali');
-moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' })
+const rememberLogin = require('app/http/middleware/rememberLogin');
+const multer = require('multer');
+const methodOverride = require('method-override');
+const Helper = require('app/helper');
 
 const app = express()
 const port = 3000
@@ -89,18 +87,9 @@ module.exports = class Application {
             next();
         });
 
-        // set up middleware to pass user to views
+        // set up middleware for Helper to pass methods to views
         app.use((req, res, next) => {
-            app.locals = {
-                auth: {
-                    check: req.isAuthenticated(),
-                    user: req.user
-                },
-                convertTime(time) {
-                    return moment(time).format('jD jMMM jYYYY')
-                },
-                req
-            }
+            app.locals = new Helper(req, res).Object()
             next();
         });
 

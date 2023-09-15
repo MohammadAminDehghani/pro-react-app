@@ -49,7 +49,7 @@ class CourseController extends controller {
 
   create(req, res) {
     try {
-      res.render('admin/course/create', { errors: req.flash('errors') });
+      res.render('admin/course/create');
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -112,8 +112,7 @@ class CourseController extends controller {
   async edit(req, res) {
     try {
       const course = await Course.findById(req.params.id);
-      console.log(req.flash('errors'))
-      res.render('admin/course/edit', { errors: req.flash('errors'), course: course });
+      res.render('admin/course/edit', { course });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

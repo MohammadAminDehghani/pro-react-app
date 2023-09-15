@@ -20,13 +20,13 @@ class episodeController extends controller {
     async create(req, res, next) {
         const courses = await Course.find({});
         
-        res.render('admin/episode/create', { errors: req.flash('errors'), courses });
+        res.render('admin/episode/create', { courses });
     }
 
     async edit(req, res, next) {
         const episode = await Episode.findById(req.params.id);
         const courses = await Course.find({});
-        res.render('admin/episode/edit', { messages: req.flash('errors'), episode, courses });
+        res.render('admin/episode/edit', { episode, courses });
     }
 
     async store(req, res, next) {

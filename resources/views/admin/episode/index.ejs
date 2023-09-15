@@ -69,36 +69,7 @@
                     </table>
                 </div>
             </div>
-            <div class="row justify-content-center m-2">
-                <% if (episodes.pages > 0) { %>
-                <div class="d-flex">
-                  <% if (episodes.page == 1) { %>
-                  <div class="page-item disabled"><a class="page-link">اولین</a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/episode/?page=<%= 1 %>">اولین</a></div>
-                  <% } %>
-                  <% var i = ((episodes.page) > 5 ? (episodes.page) - 4 : 1) %>
-                  <% if (i !== 1) { %>
-                  <div class="page-item disabled"><a class="page-link">...</a></div>
-                  <% } %>
-                  <% for (; i <= ((episodes.page) + 4) && i <= episodes.pages; i++) { %>
-                  <% if (i == episodes.page) { %>
-                  <div class="page-item active"><a class="page-link"><%= i %></a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/episode/?page=<%= i %>"><%= i %></a></div>
-                  <% } %>
-                  <% if (i == (episodes.page) + 4 && i < episodes.pages) { %>
-                  <div class="page-item disabled"><a class="page-link">...</a></div>
-                  <% } %>
-                  <% } %>
-                  <% if (episodes.page == episodes.pages) { %>
-                  <div class="page-item disabled"><a class="page-link">آخرین</a></div>
-                  <% } else { %>
-                  <div class="page-item"><a class="page-link" href="/admin/episode/?page=<%= episodes.page %>">آخرین</a></div>
-                  <% } %>
-                </div>
-                <% } %>
-              </div>
+            <%- include(viewPath("layouts/paginate"), { pagination : episodes }) %>
         </div>
     </div>
 </div>

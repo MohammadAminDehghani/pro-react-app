@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="/assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
-    <%- typeof css !== 'undefined' ? css : '' %>
-    <title>پنل مدیریت وب سایت آموزشی</title>
+    <%- typeof css !=='undefined' ? css : '' %>
+        <title>پنل مدیریت وب سایت آموزشی</title>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
                     <ul class="navbar-nav mr-auto navbar-right-top">
                         <button class="btn btn-sm btn-light m-1" disabled>
                             <%= currentUser.name %>
-                       </button>
+                        </button>
                         <a href="/logout" class="btn btn-sm btn-outline-danger ml-5 m-1">خروج</a>
                     </ul>
                 </div>
@@ -65,22 +65,14 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav flex-column" style="padding-right: 0px">
+
                             <li class="nav-item">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false"
-                                    data-target="#submenu-1" aria-controls="submenu-1"><i
-                                        class="fa fa-fw fa-user-circle"></i>داشبورد<span
-                                        class="badge badge-success">10</span></a>
-                                <div id="submenu-1" class="collapse submenu">
-                                    <ul class="nav flex-column" style="padding-right: 20px">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/admin">صفحه اصلی</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="dashboard-sales.html">نمونه 2</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a class="nav-link" href="/admin">
+                                    <i class="fa fa-fw fa-user-circle"></i>
+                                    <span>داشبورد</span>
+                                </a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-2" aria-controls="submenu-2"><i
@@ -96,6 +88,7 @@
                                     </ul>
                                 </div>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-3" aria-controls="submenu-3"><i
@@ -111,17 +104,30 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item ">
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/comment">
+                                    <i class="fa fa-fw fa-user-circle"></i>
+                                    <span>دیدگاه ها</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-                                    data-target="#submenu-4" aria-controls="submenu-4"><i
-                                        class="fab fa-fw fa-wpforms"></i>سفارشات</a>
-                                <div id="submenu-4" class="collapse submenu">
+                                    data-target="#submenu-5" aria-controls="submenu-5"><i
+                                        class="fab fa-fw fa-wpforms"></i>مقالات</a>
+                                <div id="submenu-5" class="collapse submenu">
                                     <ul class="nav flex-column" style="padding-right: 20px">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">نمونه 1</a>
+                                            <a class="nav-link" href="/admin/article/create">ایجاد مقاله جدید</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/article">مدیریت مقالات</a>
                                         </li>
                                     </ul>
                                 </div>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -140,9 +146,9 @@
                     <!-- pageheader  -->
                     <!-- ============================================================== -->
                     <%- body %>
-                    <!-- ============================================================== -->
-                    <!-- end valifation types -->
-                    <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- end valifation types -->
+                        <!-- ============================================================== -->
                 </div>
                 <!-- ============================================================== -->
                 <!-- end pageheader  -->
@@ -181,7 +187,7 @@
     <script src="/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
     <script src="/assets/vendor/charts/c3charts/C3chartjs.js"></script>
     <script src="/assets/libs/js/dashboard-ecommerce.js"></script>
-    <%- typeof script !== 'undefined' ? script : '' %>
+    <%- typeof script !=='undefined' ? script : '' %>
 </body>
 
 </html>

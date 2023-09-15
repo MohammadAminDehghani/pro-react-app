@@ -115,7 +115,8 @@
             <!--Grid row-->
         </section>
         <!--Section: Post-->
-        <%- include('./../layouts/paginate', { pagination : articles }) %>
+        <%- include(viewPath('layouts/paginate'), { pagination : articles }) %>
+        
     </div>
 </main>
 <!--Main layout-->

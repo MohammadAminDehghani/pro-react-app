@@ -49,7 +49,7 @@ class ArticleController extends controller {
 
   create(req, res) {
     try {
-      res.render('admin/article/create', { errors: req.flash('errors') });
+      res.render('admin/article/create');
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -108,8 +108,7 @@ class ArticleController extends controller {
   async edit(req, res) {
     try {
       const article = await Article.findById(req.params.id);
-      const errors = req.flash('errors');
-      res.render('admin/article/edit', { errors, article: article });
+      res.render('admin/article/edit', { article: article });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

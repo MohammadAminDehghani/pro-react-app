@@ -15,7 +15,7 @@
             <!-- Author -->
             <p class="text-muted small">
                 <span> توسط <a href="#"><%- course.user.name %></a> - </span>
-                <span>نوشته در  <%= convertTime(course.createAt) %></span>
+                <span>نوشته در  <%= convertTime(course.createAt).format('jYYYY/jMM/jDD') %></span>
             </p>
             <!--Grid row-->
             <div class="row">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
 
-                <%- include('./../layouts/comment', { data : course }) %>
+                <%- include(viewPath('layouts/comment'), { data : course }) %>
 
            
                     

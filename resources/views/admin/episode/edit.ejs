@@ -1,9 +1,9 @@
+<%- include(viewPath('layouts/error-messages'), { errors }) %>
+
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="padding-right: 0px;padding-left: 0px;">
     <div class="card">
         <h5 class="card-header">ویرایش ویدیو</h5>
         <div class="card-body">
-
-
             <form action="/admin/episode/<%= episode._id %>?_method=PUT" method="POST" novalidate>
                 <div class="form-group row">
                     <div class="col">

@@ -17,12 +17,14 @@ const courseController = require('app/http/controllers/admin/courseController');
 const episodeController = require('app/http/controllers/admin/episodeController');
 const commentController = require('app/http/controllers/admin/commentController');
 const articleController = require('app/http/controllers/admin/articleController');
+const categoryController = require('app/http/controllers/admin/categoryController');
 
 
 //validators
 const courseValidator = require('app/http/validators/admin/courseValidator')
 const episodeValidator = require('app/http/validators/admin/episodeValidator')
 const articleValidator = require('app/http/validators/admin/articleValidator')
+const categoryValidator = require('app/http/validators/admin/categoryValidator')
 
 
 router.get('/', adminController.index);
@@ -74,5 +76,18 @@ router.get('/article/:id/edit', articleController.edit);
 router.put('/article/:id', upload, articleValidator.handle(), articleController.update);
 
 router.delete('/article/:id', articleController.delete);
+
+
+/////////////////////    article routes   //////////////////////////////////
+router.get('/category', categoryController.index);
+//router.get('/category/:id/show', categoryController.show);
+
+router.get('/category/create', categoryController.create);
+router.post('/category',  categoryValidator.handle(), categoryController.post);
+
+router.get('/category/:id/edit', categoryController.edit);
+router.put('/category/:id', categoryValidator.handle(), categoryController.update);
+
+router.delete('/category/:id', categoryController.destroy);
 
 module.exports = router

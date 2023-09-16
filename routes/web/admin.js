@@ -18,6 +18,7 @@ const episodeController = require('app/http/controllers/admin/episodeController'
 const commentController = require('app/http/controllers/admin/commentController');
 const articleController = require('app/http/controllers/admin/articleController');
 const categoryController = require('app/http/controllers/admin/categoryController');
+const permissionController = require('app/http/controllers/admin/permissionController');
 const profileController = require('app/http/controllers/admin/profileController');
 
 
@@ -26,6 +27,7 @@ const courseValidator = require('app/http/validators/admin/courseValidator')
 const episodeValidator = require('app/http/validators/admin/episodeValidator')
 const articleValidator = require('app/http/validators/admin/articleValidator')
 const categoryValidator = require('app/http/validators/admin/categoryValidator')
+const permissionValidator = require('app/http/validators/admin/permissionValidator')
 
 
 router.get('/', adminController.index);
@@ -94,12 +96,20 @@ router.delete('/category/:id', categoryController.destroy);
 
 /////////////////////    profile routes   //////////////////////////////////
 router.get('/profile', profileController.index);
-// router.get('/profile/create', profileController.create);
-// router.post('/profile',  profileValidator.handle(), profileController.post);
-
-// router.get('/profile/:id/edit', profileController.edit);
 router.put('/profile/:id', profileController.updateProfile);
 
-// router.delete('/profile/:id', profileController.destroy);
+
+/////////////////////    article routes   //////////////////////////////////
+router.get('/permission', permissionController.index);
+//router.get('/permission/:id/show', permissionController.show);
+
+router.get('/permission/create', permissionController.create);
+router.post('/permission',  permissionValidator.handle(), permissionController.post);
+
+router.get('/permission/:id/edit', permissionController.edit);
+router.put('/permission/:id', permissionValidator.handle(), permissionController.update);
+
+router.delete('/permission/:id', permissionController.destroy);
+
 
 module.exports = router

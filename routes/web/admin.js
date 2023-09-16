@@ -18,6 +18,7 @@ const episodeController = require('app/http/controllers/admin/episodeController'
 const commentController = require('app/http/controllers/admin/commentController');
 const articleController = require('app/http/controllers/admin/articleController');
 const categoryController = require('app/http/controllers/admin/categoryController');
+const profileController = require('app/http/controllers/admin/profileController');
 
 
 //validators
@@ -89,5 +90,16 @@ router.get('/category/:id/edit', categoryController.edit);
 router.put('/category/:id', categoryValidator.handle(), categoryController.update);
 
 router.delete('/category/:id', categoryController.destroy);
+
+
+/////////////////////    profile routes   //////////////////////////////////
+router.get('/profile', profileController.index);
+// router.get('/profile/create', profileController.create);
+// router.post('/profile',  profileValidator.handle(), profileController.post);
+
+// router.get('/profile/:id/edit', profileController.edit);
+router.put('/profile/:id', profileController.updateProfile);
+
+// router.delete('/profile/:id', profileController.destroy);
 
 module.exports = router

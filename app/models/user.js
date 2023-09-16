@@ -59,6 +59,18 @@ User.virtual('courses', {
   foreignField: 'user',
 })
 
+User.virtual('articles', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'user',
+})
+
+User.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'user',
+})
+
 User.methods.isVip = function(){
   return false;
 }

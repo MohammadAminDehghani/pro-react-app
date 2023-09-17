@@ -1,4 +1,4 @@
-const User = require('../../../models/user');
+const User = require('app/models/user');
 const controller = require('../controller');
 const passport = require('passport');
 

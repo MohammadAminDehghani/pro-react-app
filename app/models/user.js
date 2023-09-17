@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const uniqueString = require('unique-string')
+const mongoosePaginate = require('mongoose-paginate')
 const Schema = mongoose.Schema;
 
 const User = mongoose.Schema({
@@ -8,7 +9,8 @@ const User = mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String },
   password: { type: String, required: true },
-  rememberToken: { type: String, default: '' }
+  rememberToken: { type: String, default: '' },
+  roles : [{ type : Schema.Types.ObjectId, ref : 'Role'}]
 },
   {
     timestamps: true,
@@ -71,6 +73,12 @@ User.virtual('comments', {
   foreignField: 'user',
 })
 
+// User.virtual('roles', {
+//   ref: 'User',
+//   localField: '_id',
+//   foreignField: 'roles',
+// })
+
 User.methods.isVip = function(){
   return false;
 }
@@ -79,6 +87,7 @@ User.methods.payCash = function(course){
   return false;
 }
 
+User.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('User', User);
 //module.exports = User;

@@ -24,7 +24,7 @@ module.exports = class Helper {
 
     auth(req, res) {
         return {
-            check: this.req.isAuthenticated,
+            check: this.req.isAuthenticated(),
             user: this.req.user,
         }
     }

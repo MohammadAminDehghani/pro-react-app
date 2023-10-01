@@ -10,7 +10,8 @@ const User = mongoose.Schema({
   email: { type: String },
   password: { type: String, required: true },
   rememberToken: { type: String, default: '' },
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
+  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  payCash: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
 },
   {
     timestamps: true,
@@ -91,8 +92,9 @@ User.methods.isVip = function () {
   return false;
 }
 
-User.methods.payCash = function (course) {
-  return false;
+User.methods.payCashCheck = function (courseId) {
+  //return true;
+  return this.payCash.indexOf(courseId) !== -1;
 }
 
 User.plugin(mongoosePaginate);

@@ -13,7 +13,7 @@ class userController extends controller {
     }
 
     async post(req, res, next) {
-        let result = await this.validationData(req);
+        let result = await this.validationForm(req);
         if (result) {
             this.storeProcess(req, res, next);
         } else {
@@ -28,7 +28,7 @@ class userController extends controller {
     }
 
     async update(req, res, next) {
-        let result = await this.validationData(req);
+        let result = await this.validationForm(req);
         if (result) {
             this.updateProcess(req, res, next);
         } else {
@@ -61,7 +61,7 @@ class userController extends controller {
             password
         })
 
-        adduser.save(err => { console.log(err) });
+        adduser.save();
         return res.redirect('/admin/user');
     }
 
@@ -85,10 +85,11 @@ class userController extends controller {
     }
 
     async addUserRoles(req, res, next) {
-        await User.updateOne({ '_id' : req.params.id} , { $set : { roles : req.body.roles }});
+        await User.updateOne({ '_id' : req.params.id} , { $set : { roles : req.body.roles ?? [] }});
         return res.redirect('/admin/user');
     }
 
+    // تبدیل کاربر به مدیر و کاربر عادی
     async adminAccess(req, res, next) {
         //return res.json({ '_id' : req.params.id});
         const user = await User.findById(req.params.id);

@@ -10,11 +10,11 @@ const User = mongoose.Schema({
   email: { type: String },
   password: { type: String, required: true },
   rememberToken: { type: String, default: '' },
-  roles : [{ type : Schema.Types.ObjectId, ref : 'Role'}]
+  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
 },
   {
     timestamps: true,
-    toJSON: { virtuals : true } 
+    toJSON: { virtuals: true }
   }
 );
 
@@ -55,6 +55,14 @@ User.methods.setRememberToken = function (res) {
   )
 }
 
+User.methods.hasRoles = function (roles) {
+  let result = roles.filter(role => {
+    return this.roles.indexOf(role) > -1;
+  })
+
+  return !!result.length;
+}
+
 User.virtual('courses', {
   ref: 'Course',
   localField: '_id',
@@ -79,11 +87,11 @@ User.virtual('comments', {
 //   foreignField: 'roles',
 // })
 
-User.methods.isVip = function(){
+User.methods.isVip = function () {
   return false;
 }
 
-User.methods.payCash = function(course){
+User.methods.payCash = function (course) {
   return false;
 }
 

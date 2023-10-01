@@ -7,6 +7,11 @@ router.use((req, res, next) => {
   res.locals.layout = 'admin/master';
   next();
 })
+// define with me for ACL
+//const access = require('app/http/middleware/checkUserAccess');
+
+// define with module for ACL
+const access = require('app/accessUser');
 
 const attachFileToFormData = require('app/http/middleware/attachFileToFormData');
 
@@ -36,7 +41,6 @@ const registerValidator = require('app/http/validators/registerValidator');
 
 router.get('/', adminController.index);
 // router.post('/login', loginValidator.handle(), loginController.post);
-
 
 
 /////////////////////    course routes   //////////////////////////////////
@@ -73,7 +77,8 @@ router.put('/comment/:id/approve', commentController.update);
 
 
 /////////////////////    article routes   //////////////////////////////////
-router.get('/article', articleController.index);
+//router.get('/article', access.check('create-article'), articleController.index); //for my ACL system not connect-roles module
+router.get('/article', access.can('create-article'), articleController.index);
 router.get('/article/:id/show', articleController.show);
 
 router.get('/article/create', articleController.create);

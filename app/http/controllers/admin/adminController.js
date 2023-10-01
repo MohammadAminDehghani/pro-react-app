@@ -5,6 +5,7 @@ const User = require('../../../models/user');
 
 class adminController extends controller {
     async index(req, res, next) {
+        
         res.render('admin/index')
     }
 }

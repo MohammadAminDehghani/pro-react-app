@@ -9,8 +9,9 @@ const resetPasswordRoutes = require('./auth/reset-password')
 const adminRoutes = require('./web/admin')
 
 //middleware
-const redirectAuthenticated = require('./../app/http/middleware/redirectAuthenticated')
-const redirectAdmin = require('app/http/middleware/redirectAdmin')
+const redirectAuthenticated = require('./../app/http/middleware/redirectAuthenticated');
+const redirectAdmin = require('app/http/middleware/redirectAdmin');
+
 
 
 router.use('/', homeRoutes)
@@ -19,6 +20,7 @@ router.use('/auth', redirectAuthenticated.handle,  loginRoutes)
 router.use('/auth', redirectAuthenticated.handle,  googleRoutes)
 router.use('/auth', redirectAuthenticated.handle,  forgetPasswordRoutes)
 router.use('/auth', redirectAuthenticated.handle,  resetPasswordRoutes)
+
 router.use('/admin', redirectAdmin.handle,  adminRoutes)
 
 module.exports = router

@@ -14,8 +14,13 @@ const multer = require('multer');
 const methodOverride = require('method-override');
 const Helper = require('app/helper');
 const access = require('app/accessUser');
+//const socketIo = require('socket.io');
+const chatController = require('app/http/controllers/admin/chatController');
+const { createServer } = require('node:http');
+const { Server } = require('socket.io');
 
 const app = express()
+
 const port = 3000
 
 module.exports = class Application {
@@ -28,7 +33,13 @@ module.exports = class Application {
     }
 
     configServer() {
-        app.listen(port, () => {
+        
+        const server = createServer(app);
+        const io = new Server(server);
+        chatController.connectToSocket(io);
+
+
+        server.listen(port, () => {
             console.log(`Example app listening on port ${port}`);
             //console.log(config)
         })

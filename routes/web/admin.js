@@ -27,6 +27,7 @@ const profileController = require('app/http/controllers/admin/profileController'
 const permissionController = require('app/http/controllers/admin/permissionController');
 const roleController = require('app/http/controllers/admin/roleController');
 const userController = require('app/http/controllers/admin/userController');
+const chatController = require('app/http/controllers/admin/chatController');
 
 
 //validators
@@ -148,6 +149,11 @@ router.delete('/user/:id', userController.destroy);
 router.get('/user/:id/user-roles', userController.userRoles);
 router.put('/user/:id/add-user-roles', userController.addUserRoles);
 router.get('/user/:id/admin-access', userController.adminAccess);
+
+
+//chat 
+router.get('/chat', chatController.chatForm);
+router.get('/chat-room', chatController.chatRoom);
 
 
 module.exports = router

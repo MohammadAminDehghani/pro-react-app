@@ -5,7 +5,7 @@ class redirectAdmin extends middleware {
         if(req.isAuthenticated() && req.user.admin){
             next()
         }else{
-            res.redirect('/')
+            res.redirect('/auth/login')
         }
     }
 }

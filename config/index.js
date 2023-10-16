@@ -8,5 +8,6 @@ module.exports = {
     database,
     layout,
     service,
-    session
+    session,
+    debug : false
 }

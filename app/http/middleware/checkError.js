@@ -14,10 +14,8 @@ class checkError extends middleware {
         let statusCode = err.statusCode || 500;
         let message = err.message || '';
         let stack = err.stack || '';
-        console.log(err);
-        console.log(err.statusCode);
 
-        if (config.status) return res.render('error/stack', { statusCode, message, stack });
+        if (config.debug) return res.render('error/stack', { statusCode, message, stack });
         return res.render(`error/${statusCode}`, { statusCode, message })
     }
 }

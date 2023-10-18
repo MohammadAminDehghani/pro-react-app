@@ -28,16 +28,21 @@ const permissionController = require('app/http/controllers/admin/permissionContr
 const roleController = require('app/http/controllers/admin/roleController');
 const userController = require('app/http/controllers/admin/userController');
 const chatController = require('app/http/controllers/admin/chatController');
+const froumController = require('app/http/controllers/admin/froumController');
 
 
-//validators
+//admin validators
 const courseValidator = require('app/http/validators/admin/courseValidator');
 const episodeValidator = require('app/http/validators/admin/episodeValidator');
 const articleValidator = require('app/http/validators/admin/articleValidator');
 const categoryValidator = require('app/http/validators/admin/categoryValidator');
 const permissionValidator = require('app/http/validators/admin/permissionValidator');
 const roleValidator = require('app/http/validators/admin/roleValidator');
+const froumValidator = require('app/http/validators/admin/froumValidator');
+
+// auth validators
 const registerValidator = require('app/http/validators/registerValidator');
+
 
 
 router.get('/', adminController.index);
@@ -154,6 +159,19 @@ router.get('/user/:id/admin-access', userController.adminAccess);
 //chat 
 router.get('/chat', chatController.chatForm);
 router.get('/chat-room', chatController.chatRoom);
+
+
+/////////////////////    froum routes   //////////////////////////////////
+router.get('/froum', froumController.index);
+//router.get('/froum/:id/show', froumController.show);
+
+router.get('/froum/create', froumController.create);
+router.post('/froum', froumValidator.handle(), froumController.post);
+
+router.get('/froum/:id/edit', froumController.edit);
+router.put('/froum/:id', froumValidator.handle(), froumController.update);
+
+router.delete('/froum/:id', froumController.destroy);
 
 
 module.exports = router

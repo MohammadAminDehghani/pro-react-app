@@ -37,4 +37,13 @@ router.get('/logout', (req, res) => {
     });
 })
 
+// froum
+router.get('/froum', homeController.froum);
+
+router.get('/froumQue/:id', homeController.froumQue);
+router.post('/froumQue', homeController.createfroumQue);
+
+router.get('/froumAns/:id', homeController.froumAns);
+router.post('/froumAns', homeController.createfroumAns);
+
 module.exports = router

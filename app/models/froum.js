@@ -11,11 +11,11 @@ const Froum = mongoose.Schema({
     toJSON : { virtuals : false}
 })
 
-// Froum.virtual('questions', {
-//     ref : 'FroumQue',
-//     localField : '_id',
-//     foreignField : 'froum'
-// })
+Froum.virtual('questions', {
+    ref : 'FroumQue',
+    localField : '_id',
+    foreignField : 'froum'
+})
 
 
 Froum.plugin(mongoosePaginate);

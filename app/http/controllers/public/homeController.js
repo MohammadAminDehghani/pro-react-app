@@ -4,6 +4,9 @@ const Category = require('app/models/category');
 const Article = require('app/models/article');
 const Episode = require('app/models/episode');
 const Comment = require('app/models/comment');
+const Froum = require('app/models/froum');
+const FroumQue = require('app/models/froumQue');
+const FroumAns = require('app/models/froumAns');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const faker = require('faker');
@@ -112,6 +115,85 @@ class homeController extends controller {
             }
         }
         return access;
+    }
+
+    async froum(req, res, next) {
+        try {
+            const froums = await Froum.paginate({}, {limit : 10, sort : { createdAt : 1}, populate : { path : 'questions'}});
+            //const froums = await Froum.paginate({}, {limit : 10, sort : { createdAt : 1}});
+            res.render('home/page/froum/froum' , { froums });
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async froumQue(req, res, next) {
+        try {
+            const Ques = await FroumQue.paginate({}, { limit : 10, sort : { createdAt : 1 }});
+            res.render('home/page/froum/froumQue', { Ques });
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async froumAns(req, res, next) {
+        const Que = await FroumQue.findById(req.params.id);
+        const Anss = await FroumAns.paginate({ question : req.params.id }, { limit : 10 , sort : { createdAt : 1}, populate : { path : 'user' , selcet : 'name'}});
+        res.render('home/page/froum/froumAns', { Anss, Que });
+    }
+
+    async createfroumQue(req, res, next) {
+       try {
+        const froum = await Froum.findById(req.body.froum);
+        const addQue = new FroumQue({
+            user : req.user.id,
+            ...req.body
+        })
+
+        await addQue.save();
+        
+        this.alert(req, {
+            title : "ثبت اطلاعات",
+            text : `سوال شما در انجمن ${froum.title}`,
+            type : "success"
+        })
+
+        res.redirect(`/froumQue/${req.body.froum}`);
+       } catch (err) {
+           next(err)
+       }
+    }
+
+    async createfroumAns(req, res, next) {
+        try {
+            const question = await FroumQue.findById(req.body.question);
+
+            const addAns = new FroumAns({
+                user : req.user.id,
+                ...req.body
+            })
+    
+            const user = await FroumAns.findOne({ question : req.body.question,user : req.user.id });
+            if(user != null) {
+                await addAns.save();
+                question.inc('countAns');  
+            } else {
+                await addAns.save();
+                await question.inc('countAns');  
+                await question.inc('countUser'); 
+            }
+            
+            this.alert(req, {
+                title : 'ثبت اطلاعات',
+                text : `پاسخ شما برای سوال ${question.title} ثبت شد`,
+                type : 'success'
+            })
+
+            res.redirect(`/froumAns/${req.body.question}`)
+        } catch (err) {
+            next(err)
+        }
+        
     }
 }
 

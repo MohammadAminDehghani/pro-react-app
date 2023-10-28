@@ -78,4 +78,12 @@ module.exports = class controller {
 
 
     }
+    
+    alert(req, data) {
+        let title = data.title,
+            text = data.text,
+            type = data.type
+
+        req.flash('sweetalert' , { title, text, type})
+    }
 }

@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th>سوال</th>
+                    <th>کاربران</th>
+                    <th>پاسخ ها</th>
+                    <th>آخرین بروزرسانی</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Ques.docs.forEach(Que => { %>
+                <tr>
+                    <td><a href="/froumAns/<%= Que._id %>"><%= Que.title %></a></td>
+                    <td><%= Que.countUser %></td>
+                    <td><%= Que.countAns %></td>
+                    <td><%= convertTime(Que.updatedAt).fromNow() %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <% if(auth.check) { %>
+    <div class="card my-4">
+        <div class="card">
+            <div class="card-header font-weight-bold">ایجاد سوال جدید</div>
+            <div class="card-body">
+
+                <%- include(viewPath('layouts/error-messages') , { errors }) %>
+
+                <!-- Default form reply -->
+                <form action="/froumQue" method="POST">
+                    <!-- Comment -->
+                    <input type="hidden" name="froum" value="<%= req.params.id %>">
+                    <div class="form-group">
+                        <label for="title">سوال</label>
+                        <input type="text" class="form-control" name="title"
+                            placeholder="عنوان سوال خود را وارد نمایید">
+                    </div>
+                    <div class="form-group">
+                        <label for="body">توضیحات</label>
+                        <textarea class="form-control" id="body" name="body" rows="5"
+                            placeholder="چه سوالی مد نظر شماست ؟"></textarea>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-info btn-md" type="submit">ارسال</button>
+                    </div>
+                </form>
+                <!-- Default form reply -->
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+<script src="//cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+<script>
+    CKEDITOR.replace('body')
+</script>
+<% let sweetalert = req.flash('sweetalert') %>
+<% if(sweetalert.length) { %>
+<% let data = sweetalert[0]; %>
+<script>
+    Swal.fire({
+        title: '<%= data.title %>',
+        text: '<%= data.text %>',
+        type: '<%= data.type %>'
+    })
+</script>
+<% } %>

@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="card mb-4" style="margin-top: 20px">
+        <div class="card-header">
+            <h4 class="card-title pricing-card-title"><%= Que.title %></h4>
+            <ul class="list-unstyled mt-3 mb-4">
+                <li class="getText"><%= Que.body %></li>
+            </ul>
+        </div>
+    </div>
+    <% Anss.docs.forEach(Ans => { %>
+    <div class="card mb-4" style="margin-top: 20px">
+        <div class="card-header">
+            <h6 class="my-0 font-weight-normal"><%= convertTime(Ans.createdAt).fromNow() %></h6>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title pricing-card-title"><%= Ans.user.name %></h4>
+            <ul class="list-unstyled mt-3 mb-4">
+                <li><%= Ans.body %></li>
+            </ul>
+        </div>
+    </div>
+    <% }) %>
+    <% if(auth.check) { %>
+    <div class="card my-4">
+        <div class="card">
+            <div class="card-header font-weight-bold">ایجاد پاسخ برای سوال : <%= Que.title %></div>
+            <div class="card-body">
+
+                <%- include(viewPath('layouts/error-messages') , { errors }) %>
+
+                <!-- Default form reply -->
+                <form action="/froumAns" method="POST">
+                    <!-- Comment -->
+                    <input type="hidden" name="question" value="<%= req.params.id %>">
+                    <div class="form-group">
+                        <label for="body">پاسخ</label>
+                        <textarea class="form-control" id="body" name="body" rows="5"
+                            placeholder="متن پاسخ خود را وارد کنید"></textarea>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-info btn-md" type="submit">ارسال</button>
+                    </div>
+                </form>
+                <!-- Default form reply -->
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<% let sweetalert = req.flash('sweetalert') %>
+<% if(sweetalert.length) { %>
+<% let data = sweetalert[0]; %>
+<script>
+    Swal.fire({
+        title: '<%= data.title %>',
+        text: '<%= data.text %>',
+        type: '<%= data.type %>'
+    })
+</script>
+<% } %>

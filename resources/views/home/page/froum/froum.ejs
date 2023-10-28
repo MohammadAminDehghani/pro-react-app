@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped" style="margin-top: 20px">
+            <thead>
+                <tr>
+                    <th>انجمن</th>
+                    <th>نوشته ها</th>
+                    <th>پاسخ ها</th>
+                    <th>آخرین بروزرسانی</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% froums.docs.forEach(froum => { %>
+                <tr>
+                    <td><a href="/froumQue/<%= froum._id %>"><%= froum.title %></a></td>
+                    <td><%= froum.questions ? froum.questions.length : 0 %></td>
+                    <% let count = 0 %>
+                    <% if(froum.questions){ %>
+                        <% froum.questions.forEach(question => { %>
+                            <% count += question.countAns %>
+                        <% }) %>
+                    <%  } %>
+
+                    <td><%= count %></td>
+                    <td><%= convertTime(froum.updatedAt).fromNow() %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

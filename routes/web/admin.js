@@ -173,5 +173,8 @@ router.put('/froum/:id', froumValidator.handle(), froumController.update);
 
 router.delete('/froum/:id', froumController.destroy);
 
+// ckeditor upload image
+router.post('/upload-image', upload, adminController.uploadImage)
+
 
 module.exports = router

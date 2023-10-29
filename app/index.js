@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const router = require('routes/index');
+const webRouter = require('routes/index');
+const apiRouter = require('routes/api/index');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -113,7 +114,8 @@ module.exports = class Application {
     }
 
     setRoutes() {
-        app.use(router);
+        app.use(apiRouter);
+        app.use(webRouter);
     }
 
 }

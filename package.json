@@ -44,6 +44,7 @@
     "is-extglob": "^2.1.1",
     "is-glob": "^4.0.3",
     "is-number": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "minimatch": "^3.1.2",
     "moment-jalaali": "^0.10.0",

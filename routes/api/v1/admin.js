@@ -10,7 +10,7 @@ const access = require('app/accessUser');
 const attachFileToFormData = require('app/http/middleware/attachFileToFormData');
 
 
-//controller
+//admin controller
 const adminController = require('app/http/controllers/api/v1/adminController');
 const courseController = require('app/http/controllers/api/v1/courseController');
 const episodeController = require('app/http/controllers/api/v1/episodeController');
@@ -23,6 +23,9 @@ const roleController = require('app/http/controllers/admin/roleController');
 const userController = require('app/http/controllers/admin/userController');
 const chatController = require('app/http/controllers/admin/chatController');
 const froumController = require('app/http/controllers/api/v1/froumController');
+
+//auth controller
+const loginController = require('app/http/controllers/api/v1/loginController');
 
 
 //admin validators
@@ -38,6 +41,13 @@ const froumValidator = require('app/http/validators/admin/froumValidator');
 const registerValidator = require('app/http/validators/registerValidator');
 
 
+
+////////////// auth routes //////////////////////////////////
+router.get('/login', loginController.login);
+
+
+
+////////////// admin routes //////////////////////////////////
 
 router.get('/', adminController.index);
 // router.post('/login', loginValidator.handle(), loginController.post);

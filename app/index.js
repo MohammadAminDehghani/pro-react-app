@@ -53,8 +53,9 @@ module.exports = class Application {
 
     setConfig() {
         //passport strategies
-        require('./passport/passport-local')
-        require('./passport/passport-google')
+        require('./passport/passport-local');
+        require('./passport/passport-google');
+        require('./passport/passport-jwt');
 
         //static files (css, js, photo, ...)
         app.use(express.static(config.layout.PUBLIC_DIR));

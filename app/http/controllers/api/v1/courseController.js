@@ -21,7 +21,7 @@ class CourseController extends controller {
       return res.json(courses);
       //res.render('admin/course/index', { courses });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      return res.json({ message: err.message });
     }
   }
 

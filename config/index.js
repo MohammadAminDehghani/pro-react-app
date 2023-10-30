@@ -9,5 +9,8 @@ module.exports = {
     layout,
     service,
     session,
-    debug : true
+    debug : true,
+    jwt : {
+        secretKey : 'nhd@sd3budsb&^^%$hgdvyst#@av7s'
+    }
 }

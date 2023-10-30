@@ -16,12 +16,12 @@ const courseController = require('app/http/controllers/api/v1/courseController')
 const episodeController = require('app/http/controllers/api/v1/episodeController');
 const commentController = require('app/http/controllers/api/v1/commentController');
 const articleController = require('app/http/controllers/api/v1/articleController');
-const categoryController = require('app/http/controllers/admin/categoryController');
-const profileController = require('app/http/controllers/admin/profileController');
-const permissionController = require('app/http/controllers/admin/permissionController');
-const roleController = require('app/http/controllers/admin/roleController');
-const userController = require('app/http/controllers/admin/userController');
-const chatController = require('app/http/controllers/admin/chatController');
+const categoryController = require('app/http/controllers/api/v1/categoryController');
+const profileController = require('app/http/controllers/api/v1/profileController');
+const permissionController = require('app/http/controllers/api/v1/permissionController');
+const roleController = require('app/http/controllers/api/v1/roleController');
+const userController = require('app/http/controllers/api/v1/userController');
+const chatController = require('app/http/controllers/api/v1/chatController');
 const froumController = require('app/http/controllers/api/v1/froumController');
 
 //auth controller
@@ -40,10 +40,13 @@ const froumValidator = require('app/http/validators/admin/froumValidator');
 // auth validators
 const registerValidator = require('app/http/validators/registerValidator');
 
+// auth middleware
+const redirectAuthenticatedApi = require('app/http/middleware/redirectAuthenticatedApi');
 
 
 ////////////// auth routes //////////////////////////////////
 router.get('/login', loginController.login);
+router.get('/get-user',redirectAuthenticatedApi.handle, loginController.getUser);
 
 
 

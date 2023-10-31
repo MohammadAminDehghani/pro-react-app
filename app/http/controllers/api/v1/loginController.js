@@ -67,11 +67,41 @@ class loginController extends controller {
 
     async getUser(req, res) {
         // const decoded = jwt.verify(req.params.token, 'secretKey');
-        // const user = await User.findOne({ id: decoded._id });
+        //const user = await req.user.populate({ path : 'roles', select : 'name'}).exec();
+
+        const user = await User.findById(req.user._id)
+            .populate([
+                { path: 'roles', select: 'name label', populate: [{ path: 'permissions', select: 'name label' }] },
+                { path: 'payCash', populate: [{ path: 'categories' }] }
+            ])
+            .exec();
+
         return res.json({
-            data: req.user,
+            data: this.filterUserData(user),
             success: true
         })
+    }
+
+    filterUserData(user) {
+        return {
+            id : user.id,
+            name : user.name,
+            email : user.email,
+            roles : user.roles.map(role => {
+                return {
+                    name : role.name,
+                    label : role.label,
+                    permissions : role.permissions.map(permission => {
+                        return {
+                            name : permission.name,
+                            label : permission.label
+                        }
+                    })
+                }
+            }),
+            createdAt : user.createdAt,
+            updatedAt : user.updatedAt
+        }
     }
 
 

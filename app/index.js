@@ -20,6 +20,17 @@ const chatController = require('app/http/controllers/admin/chatController');
 const { createServer } = require('node:http');
 const { Server } = require('socket.io');
 
+const { createHandler } = require('graphql-http');
+const schema = require('app/graphql/schema'); // GraphQL schema
+const rootValue = require('app/graphql/resolver.js'); // GraphQL resolvers
+
+// const http = require('http');
+// const { createHandler } = require('graphql-http/lib/use/http');
+// const schema = require('app/graphql/schema'); // GraphQL schema
+
+// Create the GraphQL over HTTP Node request handler
+const handler = createHandler({ schema });
+
 const app = express()
 
 const port = 3000
@@ -34,7 +45,7 @@ module.exports = class Application {
     }
 
     configServer() {
-        
+
         const server = createServer(app);
         const io = new Server(server);
         chatController.connectToSocket(io);
@@ -112,9 +123,21 @@ module.exports = class Application {
 
         //ACL settings
         app.use(access.middleware());
+
+
+
+        // Create the GraphQL over HTTP Node request handler
+        const handler = createHandler({ schema, rootValue });
+
+        // Apply the request handler to the '/graphql' endpoint
+        app.use('/graphql', (req, res) => {
+            handler(req, res);
+        });
+
     }
 
     setRoutes() {
+
         app.use(apiRouter);
         app.use(webRouter);
     }
